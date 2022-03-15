@@ -29,7 +29,7 @@ public class CameraMovement : MonoBehaviour
     void Update()
     {
         transform.Translate(Vector3.left*speed*Time.deltaTime);
-        if (transform.position.x < -20.0)
+        if (transform.position.x < -17.8)
         {
             corridors1[current_selected2].sortingOrder = 1;
             corridors1[current_selected1].sortingOrder = 0;
