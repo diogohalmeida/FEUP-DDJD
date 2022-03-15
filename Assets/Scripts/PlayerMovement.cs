@@ -18,14 +18,16 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         if (Input.GetKey(KeyCode.Space)){
+            if (body.drag != 0){
+                body.drag = 0;
+            }
             body.AddForce(new Vector2(0, 8), ForceMode2D.Force);
+        } else if (body.velocity[1] > 0) {
+            Debug.Log("Decelerate");
+            body.drag = 4;
+        } else {
+            body.drag = 0;
         }
 
-        //Vector3 vertical = new Vector3(0.0f, Input.GetAxis("Vertical"), 0.0f);
-        //transform.position = transform.position + 5*vertical * Time.deltaTime;
-    }
-
-    private void OnTriggerEnter2D() {
-        Debug.Log("Trigger");
     }
 }
