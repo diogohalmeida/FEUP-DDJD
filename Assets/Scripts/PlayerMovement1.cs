@@ -8,6 +8,9 @@ public class PlayerMovement1 : MonoBehaviour
     Rigidbody2D body;
     Animator animator;
 
+    public enum KeyState { Space, Off }
+    public KeyState pressed = KeyState.Off;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -22,16 +25,34 @@ public class PlayerMovement1 : MonoBehaviour
     void Update()
     {
         if (Input.GetKey(KeyCode.Space)){
-            body.AddForce(new Vector2(0, 8), ForceMode2D.Force);
+            pressed = KeyState.Space;
+            Debug.Log("Space pressed");
+        } else {
+            pressed = KeyState.Off;
         }
-        /*if (Input.GetKey(KeyCode.W)){
-            body.AddForce(new Vector2(0, 8), ForceMode2D.Force);
-        }*/
+
         if (transform.position.y > -3.114){
             animator.SetBool("is_flying", true);
         }
         else {
             animator.SetBool("is_flying", false);
+        }
+    }
+
+    void FixedUpdate()
+    {
+        if (pressed == KeyState.Space){
+            
+            if (body.drag != 0){
+                body.drag = 0;
+            }
+            body.AddForce(new Vector2(0, 50), ForceMode2D.Force);
+            Debug.Log("Force Applied");
+        } else if (body.velocity[1] > 0) {
+            body.drag = 4;
+        } else {
+            Debug.Log("Off");
+            body.drag = 0;
         }
     }
 }
