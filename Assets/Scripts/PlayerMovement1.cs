@@ -47,11 +47,9 @@ public class PlayerMovement1 : MonoBehaviour
                 body.drag = 0;
             }
             body.AddForce(new Vector2(0, 50), ForceMode2D.Force);
-            Debug.Log("Force Applied");
         } else if (body.velocity[1] > 0) {
             body.drag = 4;
         } else {
-            Debug.Log("Off");
             body.drag = 0;
         }
     }
