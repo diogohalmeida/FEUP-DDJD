@@ -27,7 +27,7 @@ public class PlayerMovement2 : MonoBehaviour
         /*if (Input.GetKey(KeyCode.W)){
             body.AddForce(new Vector2(0, 8), ForceMode2D.Force);
         }*/
-        if (transform.position.y > -3.114){
+        if (transform.position.y > -3.0){
             animator.SetBool("is_flying", true);
         }
         else {
