@@ -43,11 +43,12 @@ public class PlayerMovement1 : MonoBehaviour
                 pressed = KeyState.Off;
             }
 
-        if (transform.position.y > -3.0){
-            animator.SetBool("is_flying", true);
-        }
-        else {
-            animator.SetBool("is_flying", false);
+            if (transform.position.y > -3.0){
+                animator.SetBool("is_flying", true);
+            }
+            else {
+                animator.SetBool("is_flying", false);
+            }
         }
     }
 
