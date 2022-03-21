@@ -8,7 +8,7 @@ public class ObstacleSpawner : MonoBehaviour
     Transform obstacle;
     Transform bar_left;
     Transform bar_right;
-    Rigidbody2D body;
+    public Rigidbody2D body;
 
     void respawnObstacle(){
         obstacle.transform.position = new Vector2(4, Random.Range(-3, 3));

@@ -9,11 +9,17 @@ public class PlayerMovement1 : MonoBehaviour
     Animator animator;
 
     public enum KeyState { Space, Off }
-    public KeyState pressed = KeyState.Off;
+    KeyState pressed = KeyState.Off;
+
+    public bool gameOver;
+
+    public CameraMovement cm;
+    public ObstacleSpawner os;
 
     // Start is called before the first frame update
     void Start()
     {
+        gameOver = false;
         animator = GetComponent<Animator>();
         body = GetComponent<Rigidbody2D>();
         //positions = GetComponentsInChildren<Transform>();
@@ -26,7 +32,6 @@ public class PlayerMovement1 : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Space)){
             pressed = KeyState.Space;
-            Debug.Log("Space pressed");
         } else {
             pressed = KeyState.Off;
         }
@@ -53,4 +58,11 @@ public class PlayerMovement1 : MonoBehaviour
             body.drag = 0;
         }
     }
+
+    void OnTriggerEnter2D(Collider2D collider){
+        gameOver = true;
+        cm.speed = 0f;
+        os.body.velocity = new Vector2(0, 0);
+    }
+
 }
