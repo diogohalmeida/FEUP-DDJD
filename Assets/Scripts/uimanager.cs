@@ -7,6 +7,7 @@ public class uimanager : MonoBehaviour
 {
 
     [SerializeField] private GameObject gameOverScreen;
+    [SerializeField] private GameObject ingameUI;
 
     public PlayerMovement1 pm;
 
@@ -28,6 +29,7 @@ public class uimanager : MonoBehaviour
         }
 
         if (pm.gameOver){
+            ingameUI.SetActive(false);
             gameOverScreen.SetActive(true);
         }
     }

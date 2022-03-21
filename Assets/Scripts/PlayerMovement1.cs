@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerMovement1 : MonoBehaviour
 {
@@ -21,9 +22,14 @@ public class PlayerMovement1 : MonoBehaviour
     public CameraMovement cm;
     public ObstacleSpawner os;
 
+    public Text scoreUI;
+
+    public int score;
+
     // Start is called before the first frame update
     void Start()
     {
+        score = 0;
         canMove = true;
         gameOver = false;
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -68,12 +74,19 @@ public class PlayerMovement1 : MonoBehaviour
     }
 
     void OnTriggerEnter2D(Collider2D collider){
-        gameOver = true;
-        canMove = false;
-        cm.speed = 0f;
-        os.body.velocity = new Vector2(0, 0);
-        animator.enabled = false;
-        spriteRenderer.sprite = deadSprite;
+        if (collider.gameObject.name == "ects(Clone)"){
+            // Hits ects
+            score++;
+            scoreUI.text = score.ToString();
+            Destroy(collider.gameObject);
+        } else if (collider.gameObject.name =="Obstacle"){
+            // Hits FEUP banner
+            gameOver = true;
+            canMove = false;
+            cm.speed = 0f;
+            os.body.velocity = new Vector2(0, 0);
+            animator.enabled = false;
+            spriteRenderer.sprite = deadSprite;
+        }
     }
-
 }
