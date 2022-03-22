@@ -14,12 +14,21 @@ public class ObstacleSpawner : MonoBehaviour
 
     bool isActive;
 
-    public void respawnObstacle(){
+    public void respawnObstacle(int type){
         obstacle.SetActive(true);
         isActive = true;
-        obstacle.transform.position = new Vector2(4, Random.Range(-3, 3));
         bar_left.localScale = new Vector2(1, 60);
         bar_right.localScale = new Vector2(1, 70);
+        if (type == 0){
+            // Normal spawn
+            obstacle.transform.position = new Vector2(4, Random.Range(-3, 3));
+        } else if (type == 1){
+            // Bottom
+            obstacle.transform.position = new Vector2(4, -3);
+        } else if (type == 2){
+            // Top
+            obstacle.transform.position = new Vector2(4, 3);
+        }
         body.velocity = new Vector2(-4f, 0);
     }
 
