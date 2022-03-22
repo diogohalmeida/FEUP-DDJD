@@ -81,10 +81,13 @@ public class PlayerMovement1 : MonoBehaviour
             Destroy(collider.gameObject);
         } else if (collider.gameObject.name =="Obstacle"){
             // Hits FEUP banner
+            pressed = KeyState.Off;
+            os.body.velocity = new Vector2(0, 0);
+            os.body.angularVelocity = 0.0f;
+            os.body.gravityScale = 1.0f;
             gameOver = true;
             canMove = false;
             cm.speed = 0f;
-            os.body.velocity = new Vector2(0, 0);
             animator.enabled = false;
             spriteRenderer.sprite = deadSprite;
         }
