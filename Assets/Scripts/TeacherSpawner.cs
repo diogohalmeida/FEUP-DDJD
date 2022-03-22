@@ -14,6 +14,8 @@ public class TeacherSpawner : MonoBehaviour
     private float timer;
     private float maxTimer;
 
+    public GameObject obstacle;
+
 
     // Start is called before the first frame update
     void Start()
@@ -30,7 +32,14 @@ public class TeacherSpawner : MonoBehaviour
 
     void SpawnEnemy(){
         float x = 10.0f;
-        Vector3 spawnPoint = new Vector3(x, Random.Range(-3.0f, 3.7f), 0);
+        float y = Random.Range(-3.0f, 3.7f);
+        Vector3 spawnPoint = new Vector3(x, y, 0);
+        if (obstacle.activeSelf){
+            Vector2[] points = obstacle.GetComponent<EdgeCollider2D>().points;
+            while (y >= points[0][1] && y <= points[4][1]){
+                y = Random.Range(-3.0f, 3.7f);
+            }
+        }
         spawnPoint.z = 0;
         int rotation = Random.Range(1,4);
         switch(rotation){
@@ -50,7 +59,7 @@ public class TeacherSpawner : MonoBehaviour
         if (timer >= maxTimer){
             SpawnEnemy();
             timer = 0;
-            maxTimer = Random.Range(3f,10f);
+            maxTimer = Random.Range(100f,1000f);
         }
 
         timer += 0.1f;

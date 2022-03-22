@@ -16,7 +16,7 @@ public class EctsLogic : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (this.gameObject.transform.position[0] <= -16){
+        if (this.gameObject.transform.position[0] <= -12){
             Destroy(this.gameObject);
         }
     }

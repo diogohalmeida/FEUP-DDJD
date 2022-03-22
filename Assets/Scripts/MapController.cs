@@ -12,17 +12,20 @@ public class MapController : MonoBehaviour
 
     bool sectionActive;
 
+    public bool spawnActive;
+
     // Start is called before the first frame update
     void Start()
     {
+        spawnActive = true;
         sectionActive = false;
-        mapSection = 0;
+        mapSection = 3;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!sectionActive){
+        if (!sectionActive && spawnActive){
             sectionActive = true;
             GenerateSection();
         }

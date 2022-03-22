@@ -82,7 +82,7 @@ public class EctsGenerator : MonoBehaviour
 
         foreach (colorToObject obj in colorsToObjects){
             if (!obj.color.Equals(pixelColor)){
-                GameObject inst = Instantiate(obj.prefab, new Vector2(x-3.5f, y-3.5f), Quaternion.identity, coinSequence.transform);
+                GameObject inst = Instantiate(obj.prefab, new Vector2(x, y-3.5f), Quaternion.identity, coinSequence.transform);
                 inst.GetComponent<Rigidbody2D>().velocity = new Vector2(-4, 0);
             }
         }

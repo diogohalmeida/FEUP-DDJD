@@ -13,6 +13,7 @@ public class ObstacleSpawner : MonoBehaviour
     public MapController controller;
 
     bool isActive;
+    int currentType;
 
     public void respawnObstacle(int type){
         obstacle.SetActive(true);
@@ -21,13 +22,16 @@ public class ObstacleSpawner : MonoBehaviour
         bar_right.localScale = new Vector2(1, 70);
         if (type == 0){
             // Normal spawn
+            currentType = 0;
             obstacle.transform.position = new Vector2(4, Random.Range(-3, 3));
         } else if (type == 1){
             // Bottom
-            obstacle.transform.position = new Vector2(4, -3);
+            currentType = 1;
+            obstacle.transform.position = new Vector2(15, -3);
         } else if (type == 2){
             // Top
-            obstacle.transform.position = new Vector2(4, 3);
+            currentType = 2;
+            obstacle.transform.position = new Vector2(15, 3);
         }
         body.velocity = new Vector2(-4f, 0);
     }
@@ -35,6 +39,7 @@ public class ObstacleSpawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        currentType = 0;
         isActive = false;
         obstacle = GameObject.Find("Obstacle");
         body = obstacle.GetComponent<Rigidbody2D>();
@@ -53,7 +58,10 @@ public class ObstacleSpawner : MonoBehaviour
             obstacle.SetActive(false);
             //respawnObstacle();
             isActive = false;
-            controller.NextSection();
+            if (currentType != 1 && currentType != 2){
+                controller.NextSection();
+            }
+            
         }
         
     }

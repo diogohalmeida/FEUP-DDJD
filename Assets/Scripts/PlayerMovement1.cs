@@ -22,6 +22,10 @@ public class PlayerMovement1 : MonoBehaviour
     public CameraMovement cm;
     public ObstacleSpawner os;
 
+    public MapController controller;
+
+    public GameObject coinSequence;
+
     public Text scoreUI;
 
     public int score;
@@ -76,11 +80,13 @@ public class PlayerMovement1 : MonoBehaviour
     void OnTriggerEnter2D(Collider2D collider){
         if (collider.gameObject.name == "ects(Clone)"){
             // Hits ects
+            this.GetComponent<AudioSource>().Play();
             score++;
             scoreUI.text = score.ToString();
             Destroy(collider.gameObject);
-        } else if (collider.gameObject.name =="Obstacle"){
-            // Hits FEUP banner
+        } else if (collider.gameObject.name =="Obstacle" || collider.gameObject.name =="apr(Clone)" || collider.gameObject.name =="as(Clone)" || collider.gameObject.name =="cbm(Clone)"){
+            // Hits FEUP banner or teacher
+            controller.spawnActive = false;
             pressed = KeyState.Off;
             os.body.velocity = new Vector2(0, 0);
             os.body.angularVelocity = 0.0f;
@@ -88,8 +94,15 @@ public class PlayerMovement1 : MonoBehaviour
             gameOver = true;
             canMove = false;
             cm.speed = 0f;
+            stopCoins();
             animator.enabled = false;
             spriteRenderer.sprite = deadSprite;
+        }
+    }
+
+    void stopCoins(){
+        foreach (Transform coin in coinSequence.transform){
+            coin.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
         }
     }
 }
