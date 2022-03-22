@@ -979,11 +979,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7060342d4e2cf044d8994d9cb60711ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  map: {fileID: 2800000, guid: 62fd15996b368ea4ab4f317a55353668, type: 3}
   colorsToObjects:
   - prefab: {fileID: 3201356587742198811, guid: 5adc313eafee95245a9d48d2999030ee, type: 3}
     color: {r: 0, g: 0, b: 0, a: 0}
   coinSequence: {fileID: 1853175031}
+  maps:
+  - {fileID: 2800000, guid: 62fd15996b368ea4ab4f317a55353668, type: 3}
 --- !u!4 &309098716
 Transform:
   m_ObjectHideFlags: 0
@@ -2766,7 +2767,7 @@ Rigidbody2D:
   m_AngularDrag: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
