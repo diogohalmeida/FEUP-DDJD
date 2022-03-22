@@ -13,33 +13,64 @@ public class colorToObject
 public class EctsGenerator : MonoBehaviour
 {
 
-    public Texture2D map;
+    enum spawnType {Normal, Top, Bottom}
+
     public colorToObject[] colorsToObjects;
 
+    public MapController controller;
+
     public GameObject coinSequence;
+
+    public Texture2D[] maps;
+
+    public Texture2D coinsOnTopMap;
+    public Texture2D coinsOnBottomMap;
+
+    bool isActive;
 
     // Start is called before the first frame update
     void Start()
     {
-        GenerateEctsMap();
+        //GenerateEctsMap();
+        isActive = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
+        if (coinSequence.transform.childCount == 0 && isActive){
+            controller.NextSection();
+            isActive = false;
+        }
+        /*
+        if (generateEcts){
+            GenerateEctsMap(SelectMap());
+            generateEcts = false;
+        }
+        */
     }
 
-    void GenerateEctsMap()
+    public void SpawnEcts(){
+        GenerateEctsMap(SelectMap());
+    }
+
+    Texture2D SelectMap()
     {
+        return maps[Random.Range(0, maps.Length)];
+    }
+
+    void GenerateEctsMap(Texture2D map)
+    {
+        isActive = true;
         for (int i = 0; i < map.width; i++){
             for (int j = 0; j < map.height; j++){
-                GenerateEcts(i, j);
+                GenerateEcts(i, j, map);
             }
         }
     }
 
-    void GenerateEcts(int x, int y)
+    void GenerateEcts(int x, int y, Texture2D map)
     {
         Color pixelColor = map.GetPixel(x, y);
 

@@ -84,7 +84,8 @@ public class PlayerMovement1 : MonoBehaviour
             gameOver = true;
             canMove = false;
             cm.speed = 0f;
-            os.body.velocity = new Vector2(0, 0);
+            os.body.velocity = new Vector2(0, os.body.velocity[1]);
+            os.body.gravityScale = 4;
             animator.enabled = false;
             spriteRenderer.sprite = deadSprite;
         }
