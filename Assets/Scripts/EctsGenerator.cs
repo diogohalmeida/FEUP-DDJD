@@ -12,9 +12,6 @@ public class colorToObject
 
 public class EctsGenerator : MonoBehaviour
 {
-
-    enum spawnType {Normal, Top, Bottom}
-
     public colorToObject[] colorsToObjects;
 
     public MapController controller;
@@ -51,8 +48,17 @@ public class EctsGenerator : MonoBehaviour
         */
     }
 
-    public void SpawnEcts(){
-        GenerateEctsMap(SelectMap());
+    public void SpawnEcts(int type){
+        if (type == 0){
+            // Normal spawn
+            GenerateEctsMap(SelectMap());
+        } else if (type == 1) {
+            // Ects on top
+            GenerateEctsMap(coinsOnTopMap);
+        } else if (type == 2){
+            GenerateEctsMap(coinsOnBottomMap);
+        }
+        
     }
 
     Texture2D SelectMap()

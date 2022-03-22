@@ -22,7 +22,6 @@ public class MapController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(sectionActive);
         if (!sectionActive){
             sectionActive = true;
             GenerateSection();
@@ -30,20 +29,20 @@ public class MapController : MonoBehaviour
     }
 
     void GenerateSection(){
-        Debug.Log("Generate Section");
         switch (mapSection){
             case 0:
             case 2:
-                ectsGenerator.SpawnEcts();
+                ectsGenerator.SpawnEcts(0);
                 break;
             case 1:
                 obstacleSpawner.respawnObstacle();
                 break;
             case 3:
                 // Coins on top, obstacle on bottom
-                
+                ectsGenerator.SpawnEcts(1);
                 break;
             case 4:
+                ectsGenerator.SpawnEcts(2);
                 // Coins on bottom, obstacle on top
                 break;
         }
