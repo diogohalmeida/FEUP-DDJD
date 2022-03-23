@@ -11,7 +11,8 @@ public class PlayerMovement1 : MonoBehaviour
 
     SpriteRenderer spriteRenderer;
 
-    public Sprite deadSprite;
+    [SerializeField]
+    private Sprite deadSprite;
 
     public enum KeyState { Space, Off }
     KeyState pressed = KeyState.Off;
@@ -19,21 +20,34 @@ public class PlayerMovement1 : MonoBehaviour
     public bool gameOver;
 
     bool canMove;
-    public CameraMovement cm;
-    public ObstacleSpawner os;
 
-    public MapController controller;
+    [SerializeField]
+    private CameraMovement cm;
 
-    public GameObject coinSequence;
+    [SerializeField]
+    private ObstacleSpawner os;
 
-    public Text scoreUI;
+    [SerializeField]
+    private MapController controller;
 
-    public int score;
+    [SerializeField]
+    private ProjectileManager pm;
+
+    [SerializeField]
+    private GameObject coinSequence;
+
+    [SerializeField]
+    private GameObject teachersHolder;
+
+    [SerializeField]
+    private GameObject projectileHolder;
+
+    [SerializeField]
+    private ScoreCounter scoreUI;
 
     // Start is called before the first frame update
     void Start()
     {
-        score = 0;
         canMove = true;
         gameOver = false;
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -51,6 +65,10 @@ public class PlayerMovement1 : MonoBehaviour
                 pressed = KeyState.Space;
             } else {
                 pressed = KeyState.Off;
+            }
+
+            if (Input.GetKeyDown(KeyCode.P)){
+                pm.Shoot(this.gameObject.transform.position[0], this.gameObject.transform.position[1]);
             }
 
             if (transform.position.y > -3.0){
@@ -81,8 +99,7 @@ public class PlayerMovement1 : MonoBehaviour
         if (collider.gameObject.name == "ects(Clone)"){
             // Hits ects
             this.GetComponent<AudioSource>().Play();
-            score++;
-            scoreUI.text = score.ToString();
+            scoreUI.UpdateScore(1);
             Destroy(collider.gameObject);
         } else if (collider.gameObject.name =="Obstacle" || collider.gameObject.name =="apr(Clone)" || collider.gameObject.name =="as(Clone)" || collider.gameObject.name =="cbm(Clone)"){
             // Hits FEUP banner or teacher
@@ -95,14 +112,31 @@ public class PlayerMovement1 : MonoBehaviour
             canMove = false;
             cm.speed = 0f;
             stopCoins();
+            stopProjectiles();
+            stopTeachers();
             animator.enabled = false;
             spriteRenderer.sprite = deadSprite;
         }
     }
 
-    void stopCoins(){
+    void stopCoins()
+    {
         foreach (Transform coin in coinSequence.transform){
             coin.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
+        }
+    }
+
+    void stopProjectiles()
+    {
+        foreach (Transform projectile in projectileHolder.transform){
+            projectile.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
+        }
+    }
+
+    void stopTeachers()
+    {
+        foreach (Transform teacher in teachersHolder.transform){
+            teacher.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
         }
     }
 }

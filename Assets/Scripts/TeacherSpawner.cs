@@ -11,6 +11,10 @@ public class TeacherSpawner : MonoBehaviour
     private GameObject cbmPrefab;
     [SerializeField]
     private GameObject asPrefab;
+
+    [SerializeField]
+    private GameObject teachersHolder;
+
     private float timer;
     private float maxTimer;
 
@@ -42,15 +46,19 @@ public class TeacherSpawner : MonoBehaviour
         }
         spawnPoint.z = 0;
         int rotation = Random.Range(1,4);
+        GameObject teacher;
         switch(rotation){
             case 1:
-                GameObject.Instantiate(cbmPrefab, spawnPoint, new Quaternion(0,0,0,0));
+                teacher = GameObject.Instantiate(cbmPrefab, spawnPoint, new Quaternion(0,0,0,0));
+                teacher.transform.SetParent(teachersHolder.transform);
                 break;
             case 2: 
-                GameObject.Instantiate(asPrefab, spawnPoint, new Quaternion(0,0,0,0));
+                teacher = GameObject.Instantiate(asPrefab, spawnPoint, new Quaternion(0,0,0,0));
+                teacher.transform.SetParent(teachersHolder.transform);
                 break;
             case 3: 
-                GameObject.Instantiate(aprPrefab, spawnPoint, new Quaternion(0,0,0,0));
+                teacher = GameObject.Instantiate(aprPrefab, spawnPoint, new Quaternion(0,0,0,0));
+                teacher.transform.SetParent(teachersHolder.transform);
                 break;
         }
     }
@@ -59,7 +67,7 @@ public class TeacherSpawner : MonoBehaviour
         if (timer >= maxTimer){
             SpawnEnemy();
             timer = 0;
-            maxTimer = Random.Range(100f,1000f);
+            maxTimer = Random.Range(10f,100f);
         }
 
         timer += 0.1f;
