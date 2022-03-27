@@ -43,7 +43,10 @@ public class PlayerMovement1 : MonoBehaviour
     private GameObject projectileHolder;
 
     [SerializeField]
-    private ScoreCounter scoreUI;
+    private TeacherSpawner teacherSpawner;
+
+    [SerializeField]
+    private IngameUIManager ingameUI;
 
     [SerializeField]
     public GameObject scoreBoard;
@@ -104,23 +107,29 @@ public class PlayerMovement1 : MonoBehaviour
         if (collider.gameObject.name == "ects(Clone)"){
             // Hits ects
             this.GetComponent<AudioSource>().Play();
-            scoreUI.UpdateScore(1);
+            ingameUI.UpdateScore(1);
             Destroy(collider.gameObject);
-        } else if (collider.gameObject.name =="Obstacle" || collider.gameObject.name =="apr(Clone)" || collider.gameObject.name =="as(Clone)" || collider.gameObject.name =="cbm(Clone)"){
+        } else if (collider.gameObject.name =="Obstacle(Clone)" || collider.gameObject.name =="apr(Clone)" || collider.gameObject.name =="as(Clone)" || collider.gameObject.name =="cbm(Clone)"){
             // Hits FEUP banner or teacher
             controller.spawnActive = false;
             pressed = KeyState.Off;
-            os.body.velocity = new Vector2(0, 0);
+            /*os.body.velocity = new Vector2(0, 0);
             os.body.angularVelocity = 0.0f;
-            os.body.gravityScale = 1.0f;
+            os.body.gravityScale = 1.0f;*/
             gameOver = true;
             canMove = false;
             cm.speed = 0f;
             stopCoins();
             stopProjectiles();
             stopTeachers();
+            stopObstacles();
+            teacherSpawner.StopSpawner();
             animator.enabled = false;
             spriteRenderer.sprite = deadSprite;
+        } else if(collider.gameObject.name == "coffee(Clone)"){
+            ingameUI.SetCoffeePowerup(true);
+        } else if(collider.gameObject.name == "notes(Clone)"){
+            ingameUI.SetNotesPowerup(true);
         }
     }
 
@@ -149,6 +158,12 @@ public class PlayerMovement1 : MonoBehaviour
         if (transform.position.y > 2.0){
             GameObject board = scoreBoard.transform.GetChild (0).gameObject;
             //board.GetComponent<Image>().color.a = 0.1f;
+        }
+    }
+    void stopObstacles()
+    {
+        foreach (Transform obstacle in os.transform){
+            obstacle.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
         }
     }
 }

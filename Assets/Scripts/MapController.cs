@@ -38,16 +38,16 @@ public class MapController : MonoBehaviour
                 ectsGenerator.SpawnEcts(0);
                 break;
             case 1:
-                obstacleSpawner.respawnObstacle(0);
+                obstacleSpawner.SpawnObstacle(0);
                 break;
             case 3:
                 // Coins on top, obstacle on bottom
                 ectsGenerator.SpawnEcts(1);
-                obstacleSpawner.respawnObstacle(1);
+                obstacleSpawner.SpawnObstacle(1);
                 break;
             case 4:
                 ectsGenerator.SpawnEcts(2);
-                obstacleSpawner.respawnObstacle(2);
+                obstacleSpawner.SpawnObstacle(2);
                 // Coins on bottom, obstacle on top
                 break;
         }
