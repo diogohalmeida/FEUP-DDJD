@@ -18,8 +18,13 @@ public class PlayerMovement1 : MonoBehaviour
     KeyState pressed = KeyState.Off;
 
     public bool gameOver;
-
+    
     bool canMove;
+
+    int coffeeSecs = 0;
+    int notesSecs = 0;
+    bool coffeeOn = false;
+    bool notesOn = false;
 
     [SerializeField]
     private CameraMovement cm;
@@ -90,6 +95,24 @@ public class PlayerMovement1 : MonoBehaviour
 
     void FixedUpdate()
     {
+        if(coffeeOn){
+            coffeeSecs +=1;
+        }
+        if(notesOn){
+            notesSecs +=1;
+        }
+        if(coffeeSecs >= 1000){
+            pm.SetPowerUp(0, false);
+            ingameUI.SetCoffeePowerup(false);
+            coffeeOn = false;
+            coffeeSecs = 0;
+        }
+        if(notesSecs >= 1000){
+            pm.SetPowerUp(1, false);
+            ingameUI.SetNotesPowerup(false);
+            notesOn = false;
+            notesSecs = 0;
+        }
         if (pressed == KeyState.Space){
             
             if (body.drag != 0){
@@ -127,8 +150,14 @@ public class PlayerMovement1 : MonoBehaviour
             animator.enabled = false;
             spriteRenderer.sprite = deadSprite;
         } else if(collider.gameObject.name == "coffee(Clone)"){
+            pm.SetPowerUp(0,true);
+            coffeeOn = true;
+            Destroy(collider.gameObject);
             ingameUI.SetCoffeePowerup(true);
         } else if(collider.gameObject.name == "notes(Clone)"){
+            pm.SetPowerUp(1,true);
+            notesOn = true;
+            Destroy(collider.gameObject);
             ingameUI.SetNotesPowerup(true);
         }
     }
@@ -155,9 +184,40 @@ public class PlayerMovement1 : MonoBehaviour
     }
 
     void reduceUIOpacity(){
+        GameObject board = scoreBoard.transform.GetChild(0).gameObject;
+        GameObject ectsscore = scoreBoard.transform.GetChild(1).gameObject;
+        GameObject metercounter = scoreBoard.transform.GetChild(2).gameObject;
+        GameObject ectsicon = scoreBoard.transform.GetChild(3).gameObject;
+        
+        Image img1 = board.GetComponent<Image>();
+        Text img2 = ectsscore.GetComponent<Text>();
+        Text img3 = metercounter.GetComponent<Text>();
+        Image img4 = ectsicon.GetComponent<Image>();
+
+        Color newColor1 = img1.color;
+        Color newColor2 = img2.color;
+        Color newColor3 = img3.color;
+        Color newColor4 = img4.color;
+        
         if (transform.position.y > 2.0){
-            GameObject board = scoreBoard.transform.GetChild (0).gameObject;
-            //board.GetComponent<Image>().color.a = 0.1f;
+            newColor1.a = 0.5f;
+            img1.color = newColor1;
+            newColor2.a = 0.5f;
+            img2.color = newColor2;            
+            newColor3.a = 0.5f;
+            img3.color = newColor3;            
+            newColor4.a = 0.5f;
+            img4.color = newColor4;
+        }
+        else{
+            newColor1.a = 1.0f;
+            img1.color = newColor1;
+            newColor2.a = 1.0f;
+            img2.color = newColor2;            
+            newColor3.a = 1.0f;
+            img3.color = newColor3;            
+            newColor4.a = 1.0f;
+            img4.color = newColor4;
         }
     }
     void stopObstacles()

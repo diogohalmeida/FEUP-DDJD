@@ -10,6 +10,9 @@ public class TeacherController : MonoBehaviour
     private Rigidbody2D rb;
 
     private IngameUIManager uiManager;
+    
+    [SerializeField]
+    private GameObject extraECTSPrefab;
 
     private bool has_given_score;
 
@@ -35,6 +38,9 @@ public class TeacherController : MonoBehaviour
             Destroy(collider.gameObject);
             has_given_score = true;
             uiManager.UpdateScore(5);
+            Vector3 spawnPoint = new Vector3(transform.position.x, transform.position.y+1.25f, 0);
+            GameObject extrascore;
+            extrascore = GameObject.Instantiate(extraECTSPrefab, spawnPoint, new Quaternion(0,0,0,0));
             Destroy(this.gameObject);
         }
     }

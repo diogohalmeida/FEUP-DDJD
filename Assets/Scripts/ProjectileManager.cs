@@ -53,6 +53,17 @@ public class ProjectileManager : MonoBehaviour
         shotBar.value = shotBar.minValue;
     }
 
+    public void SetPowerUp(int powerUpN, bool status){
+        switch (powerUpN){
+            case 0:
+                coffeePowerup = status;
+                break;
+            case 1:
+                notesPowerup = status;
+                break;
+        }
+    }
+
     public void Shoot(float x, float y){
         if (canShoot){
             if (!coffeePowerup){

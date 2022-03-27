@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class IngameUIManager : MonoBehaviour
 {
@@ -19,11 +20,25 @@ public class IngameUIManager : MonoBehaviour
     }
 
     public void SetCoffeePowerup(bool status){
-        coffeePowerup.SetActive(status);
+        Color powerUpColor = coffeePowerup.GetComponent<Image>().color;
+        if(status){
+            powerUpColor.a = 1.0f;
+        }
+        else{
+            powerUpColor.a = 0.5f;
+        }
+        coffeePowerup.GetComponent<Image>().color = powerUpColor;
     }
 
     public void SetNotesPowerup(bool status){
-        notesPowerup.SetActive(status);
+        Color powerUpColor = notesPowerup.GetComponent<Image>().color;
+        if(status){
+            powerUpColor.a = 1.0f;
+        }
+        else{
+            powerUpColor.a = 0.5f;
+        }
+        notesPowerup.GetComponent<Image>().color = powerUpColor;
     }
 
 }
