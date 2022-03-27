@@ -31,8 +31,8 @@ public class TeacherController : MonoBehaviour
     }
 
     void OnTriggerEnter2D(Collider2D collider){
-        Destroy(collider.gameObject);
         if (collider.gameObject.name == "assignment(Clone)" && !has_given_score){
+            Destroy(collider.gameObject);
             has_given_score = true;
             scoreUI.UpdateScore(5);
             Destroy(this.gameObject);

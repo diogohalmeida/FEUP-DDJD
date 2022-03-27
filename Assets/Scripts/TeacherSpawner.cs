@@ -20,10 +20,13 @@ public class TeacherSpawner : MonoBehaviour
 
     public GameObject obstacle;
 
+    private bool spawn;
+
 
     // Start is called before the first frame update
     void Start()
     {
+        spawn = true;
         timer = 0;
         maxTimer = Random.Range(5f, 12f);
     }
@@ -35,13 +38,15 @@ public class TeacherSpawner : MonoBehaviour
     }
 
     void SpawnEnemy(){
+        if (!spawn) {
+            return;
+        }
         float x = 10.0f;
         float y = Random.Range(-3.0f, 3.7f);
         Vector3 spawnPoint = new Vector3(x, y, 0);
         if (obstacle.activeSelf){
-            Vector2[] points = obstacle.GetComponent<EdgeCollider2D>().points;
-            while (y >= points[0][1] && y <= points[4][1]){
-                y = Random.Range(-3.0f, 3.7f);
+            while (y <= obstacle.transform.position[1] + 0.95f && y >= obstacle.transform.position[1] - 1.33f){
+                spawnPoint.y = Random.Range(-3.0f, 3.7f);
             }
         }
         spawnPoint.z = 0;
@@ -61,6 +66,11 @@ public class TeacherSpawner : MonoBehaviour
                 teacher.transform.SetParent(teachersHolder.transform);
                 break;
         }
+    }
+
+    public void StopSpawner()
+    {
+        spawn = false;
     }
 
     IEnumerator SpawnEnemyTimer(){

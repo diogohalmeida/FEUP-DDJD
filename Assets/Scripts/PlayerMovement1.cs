@@ -43,7 +43,10 @@ public class PlayerMovement1 : MonoBehaviour
     private GameObject projectileHolder;
 
     [SerializeField]
-    private ScoreCounter scoreUI;
+    private TeacherSpawner teacherSpawner;
+
+    [SerializeField]
+    private IngameUIManager ingameUI;
 
     // Start is called before the first frame update
     void Start()
@@ -99,7 +102,7 @@ public class PlayerMovement1 : MonoBehaviour
         if (collider.gameObject.name == "ects(Clone)"){
             // Hits ects
             this.GetComponent<AudioSource>().Play();
-            scoreUI.UpdateScore(1);
+            ingameUI.UpdateScore(1);
             Destroy(collider.gameObject);
         } else if (collider.gameObject.name =="Obstacle" || collider.gameObject.name =="apr(Clone)" || collider.gameObject.name =="as(Clone)" || collider.gameObject.name =="cbm(Clone)"){
             // Hits FEUP banner or teacher
@@ -114,8 +117,13 @@ public class PlayerMovement1 : MonoBehaviour
             stopCoins();
             stopProjectiles();
             stopTeachers();
+            teacherSpawner.StopSpawner();
             animator.enabled = false;
             spriteRenderer.sprite = deadSprite;
+        } else if(collider.gameObject.name == "coffee(Clone)"){
+            ingameUI.SetCoffeePowerup(true);
+        } else if(collider.gameObject.name == "notes(Clone)"){
+            ingameUI.SetNotesPowerup(true);
         }
     }
 
