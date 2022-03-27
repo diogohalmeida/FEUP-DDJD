@@ -16,6 +16,6 @@ public class ScoreCounter : MonoBehaviour
 
     public void UpdateScore(int amount){
         score += amount;
-        this.GetComponent<Text>().text = score.ToString();
+        this.GetComponent<Text>().text = score.ToString() + "x";
     }
 }

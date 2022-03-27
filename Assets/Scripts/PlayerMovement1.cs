@@ -45,6 +45,9 @@ public class PlayerMovement1 : MonoBehaviour
     [SerializeField]
     private ScoreCounter scoreUI;
 
+    [SerializeField]
+    public GameObject scoreBoard;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -77,6 +80,8 @@ public class PlayerMovement1 : MonoBehaviour
             else {
                 animator.SetBool("is_flying", false);
             }
+
+            reduceUIOpacity();
         }
     }
 
@@ -137,6 +142,13 @@ public class PlayerMovement1 : MonoBehaviour
     {
         foreach (Transform teacher in teachersHolder.transform){
             teacher.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
+        }
+    }
+
+    void reduceUIOpacity(){
+        if (transform.position.y > 2.0){
+            GameObject board = scoreBoard.transform.GetChild (0).gameObject;
+            //board.GetComponent<Image>().color.a = 0.1f;
         }
     }
 }
