@@ -5,21 +5,21 @@ using UnityEngine.UI;
 
 public class TeacherController : MonoBehaviour
 {
-    // Start is called before the first frame update
 
     public float speed;
     private Rigidbody2D rb;
 
-    private ScoreCounter scoreUI;
+    private IngameUIManager uiManager;
 
     private bool has_given_score;
 
+    // Start is called before the first frame update
     void Start()
     {
         has_given_score = false;
         rb = GetComponent<Rigidbody2D>();
         rb.velocity = new Vector2(-speed, 0);
-        scoreUI = GameObject.Find("Score").GetComponent<Text>().GetComponent<ScoreCounter>();
+        uiManager = GameObject.Find("IngameUIManager").GetComponent<IngameUIManager>();
     }
 
     // Update is called once per frame
@@ -34,7 +34,7 @@ public class TeacherController : MonoBehaviour
         if (collider.gameObject.name == "assignment(Clone)" && !has_given_score){
             Destroy(collider.gameObject);
             has_given_score = true;
-            scoreUI.UpdateScore(5);
+            uiManager.UpdateScore(5);
             Destroy(this.gameObject);
         }
     }

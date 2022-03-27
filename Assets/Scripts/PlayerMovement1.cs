@@ -104,19 +104,20 @@ public class PlayerMovement1 : MonoBehaviour
             this.GetComponent<AudioSource>().Play();
             ingameUI.UpdateScore(1);
             Destroy(collider.gameObject);
-        } else if (collider.gameObject.name =="Obstacle" || collider.gameObject.name =="apr(Clone)" || collider.gameObject.name =="as(Clone)" || collider.gameObject.name =="cbm(Clone)"){
+        } else if (collider.gameObject.name =="Obstacle(Clone)" || collider.gameObject.name =="apr(Clone)" || collider.gameObject.name =="as(Clone)" || collider.gameObject.name =="cbm(Clone)"){
             // Hits FEUP banner or teacher
             controller.spawnActive = false;
             pressed = KeyState.Off;
-            os.body.velocity = new Vector2(0, 0);
+            /*os.body.velocity = new Vector2(0, 0);
             os.body.angularVelocity = 0.0f;
-            os.body.gravityScale = 1.0f;
+            os.body.gravityScale = 1.0f;*/
             gameOver = true;
             canMove = false;
             cm.speed = 0f;
             stopCoins();
             stopProjectiles();
             stopTeachers();
+            stopObstacles();
             teacherSpawner.StopSpawner();
             animator.enabled = false;
             spriteRenderer.sprite = deadSprite;
@@ -145,6 +146,13 @@ public class PlayerMovement1 : MonoBehaviour
     {
         foreach (Transform teacher in teachersHolder.transform){
             teacher.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
+        }
+    }
+
+    void stopObstacles()
+    {
+        foreach (Transform obstacle in os.transform){
+            obstacle.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
         }
     }
 }

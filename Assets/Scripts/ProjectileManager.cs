@@ -25,7 +25,7 @@ public class ProjectileManager : MonoBehaviour
     void Start()
     {
         notesPowerup = false;
-        coffeePowerup = true;
+        coffeePowerup = false;
         canShoot = true;
         fillTime = 0f;
     }
