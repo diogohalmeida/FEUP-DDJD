@@ -25,6 +25,11 @@ public class PlayerMovement1 : MonoBehaviour
     int notesSecs = 0;
     bool coffeeOn = false;
     bool notesOn = false;
+    
+    bool alternate1 = false;
+    bool alternate2 = false;
+
+    AudioSource[] sounds;
 
     [SerializeField]
     private CameraMovement cm;
@@ -56,22 +61,36 @@ public class PlayerMovement1 : MonoBehaviour
     [SerializeField]
     public GameObject scoreBoard;
 
+    int chosenSong;
+
     // Start is called before the first frame update
     void Start()
     {
+        
         canMove = true;
+        chosenSong = Random.Range(0,2);
         gameOver = false;
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
         body = GetComponent<Rigidbody2D>();
-        //positions = GetComponentsInChildren<Transform>();
-        //n_players = bodies.Length;
+        sounds = GetComponents<AudioSource>(); // 0 -> ECTS Pickup; 1 -> Coffee PowerUp; 2 -> Notes PowerUp; 3 -> Running; 4 -> Jetpack Up; 5 -> Jetpack Down; 6 -> Obstacle Hit; 7 -> Teacher Hit; 8 -> GameMusic1; 9 -> GameMusic2;
+        if(chosenSong == 0){
+            if(!sounds[8].isPlaying) sounds[8].Play();
+        }
+        else if(chosenSong == 1){
+            if(!sounds[9].isPlaying) sounds[9].Play();
+        }
+
     }
 
     // Update is called once per frame
     void Update()
     {
         if (canMove){
+            if(!sounds[8].isPlaying && !sounds[9].isPlaying){
+                chosenSong = 1-chosenSong;
+                sounds[8+chosenSong].Play();
+            }
             if (Input.GetKey(KeyCode.Space)){
                 pressed = KeyState.Space;
             } else {
@@ -83,10 +102,13 @@ public class PlayerMovement1 : MonoBehaviour
             }
 
             if (transform.position.y > -3.0){
+                if(sounds[3].isPlaying) sounds[3].Stop();
                 animator.SetBool("is_flying", true);
             }
             else {
+                if(sounds[5].isPlaying) sounds[5].Stop();
                 animator.SetBool("is_flying", false);
+                if(!sounds[3].isPlaying) sounds[3].Play();
             }
 
             reduceUIOpacity();
@@ -101,11 +123,20 @@ public class PlayerMovement1 : MonoBehaviour
         if(notesOn){
             notesSecs +=1;
         }
+        
+        if(coffeeSecs >= 750 && coffeeSecs % 25 == 0){
+            ingameUI.SetCoffeePowerup(alternate1);
+            alternate1 = !alternate1;
+        }
         if(coffeeSecs >= 1000){
             pm.SetPowerUp(0, false);
             ingameUI.SetCoffeePowerup(false);
             coffeeOn = false;
             coffeeSecs = 0;
+        }
+        if(notesSecs >= 750 && notesSecs % 25 == 0){
+            ingameUI.SetNotesPowerup(alternate2);
+            alternate2 = !alternate2;
         }
         if(notesSecs >= 1000){
             pm.SetPowerUp(1, false);
@@ -114,14 +145,19 @@ public class PlayerMovement1 : MonoBehaviour
             notesSecs = 0;
         }
         if (pressed == KeyState.Space){
-            
             if (body.drag != 0){
                 body.drag = 0;
             }
+            if(sounds[5].isPlaying) sounds[5].Stop();
+            if(!sounds[4].isPlaying && !gameOver) sounds[4].Play();
             body.AddForce(new Vector2(0, 50), ForceMode2D.Force);
         } else if (body.velocity[1] > 0) {
+            if(!sounds[5].isPlaying && !gameOver) sounds[5].Play();
             body.drag = 4;
         } else {
+            if(sounds[4].isPlaying) sounds[4].Stop();
+            //if(sounds[5].isPlaying) sounds[5].Stop();
+            if(!sounds[3].isPlaying && !gameOver) sounds[3].Play();
             body.drag = 0;
         }
     }
@@ -129,16 +165,25 @@ public class PlayerMovement1 : MonoBehaviour
     void OnTriggerEnter2D(Collider2D collider){
         if (collider.gameObject.name == "ects(Clone)"){
             // Hits ects
-            this.GetComponent<AudioSource>().Play();
+            if(!sounds[0].isPlaying) sounds[0].Play();
             ingameUI.UpdateScore(1);
             Destroy(collider.gameObject);
         } else if (collider.gameObject.name =="Obstacle(Clone)" || collider.gameObject.name =="apr(Clone)" || collider.gameObject.name =="as(Clone)" || collider.gameObject.name =="cbm(Clone)"){
             // Hits FEUP banner or teacher
+            if(collider.gameObject.name == "Obstacle(Clone)"){
+                if(!sounds[6].isPlaying) sounds[6].Play();
+            }
+            else{
+                if(!sounds[7].isPlaying) sounds[7].Play();
+            }
             controller.spawnActive = false;
             pressed = KeyState.Off;
             /*os.body.velocity = new Vector2(0, 0);
             os.body.angularVelocity = 0.0f;
             os.body.gravityScale = 1.0f;*/
+            if(sounds[3].isPlaying) sounds[3].Stop();
+            if(sounds[4].isPlaying) sounds[4].Stop();
+            if(sounds[5].isPlaying) sounds[5].Stop();
             gameOver = true;
             canMove = false;
             cm.speed = 0f;
@@ -150,11 +195,13 @@ public class PlayerMovement1 : MonoBehaviour
             animator.enabled = false;
             spriteRenderer.sprite = deadSprite;
         } else if(collider.gameObject.name == "coffee(Clone)"){
+            sounds[1].Play();
             pm.SetPowerUp(0,true);
             coffeeOn = true;
             Destroy(collider.gameObject);
             ingameUI.SetCoffeePowerup(true);
         } else if(collider.gameObject.name == "notes(Clone)"){
+            sounds[2].Play();
             pm.SetPowerUp(1,true);
             notesOn = true;
             Destroy(collider.gameObject);
@@ -205,7 +252,7 @@ public class PlayerMovement1 : MonoBehaviour
             newColor2.a = 0.5f;
             img2.color = newColor2;            
             newColor3.a = 0.5f;
-            img3.color = newColor3;            
+            img3.color = newColor3;
             newColor4.a = 0.5f;
             img4.color = newColor4;
         }
