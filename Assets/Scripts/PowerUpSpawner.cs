@@ -11,17 +11,14 @@ public class PowerUpSpawner : MonoBehaviour
     private GameObject notesPrefab;
     [SerializeField]
     private GameObject obstacleHolder;
-    // Start is called before the first frame update
-    void Start()
+
+    private float speed = -4f;
+
+    public void multiplySpeed(float multiplyFactor)
     {
-        
+        speed *= multiplyFactor;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public void SpawnPowerUp(){
         int powerUpN = Random.Range(0,2);
@@ -46,9 +43,13 @@ public class PowerUpSpawner : MonoBehaviour
         GameObject powerup;
         if(powerUpN == 0){ // spawn coffee
             powerup = GameObject.Instantiate(coffeePrefab, spawnPoint, Quaternion.identity);
+            powerup.transform.parent = this.gameObject.transform;
+            powerup.GetComponent<Rigidbody2D>().velocity = new Vector2(speed, 0);
         }
         else{ // spawn notes
             powerup = GameObject.Instantiate(notesPrefab, spawnPoint, Quaternion.identity);
+            powerup.transform.parent = this.gameObject.transform;
+            powerup.GetComponent<Rigidbody2D>().velocity = new Vector2(speed, 0);
         }
     }
     

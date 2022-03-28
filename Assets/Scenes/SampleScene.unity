@@ -653,6 +653,9 @@ MonoBehaviour:
   asPrefab: {fileID: 7235830966659403100, guid: 49f72ea0d880529439a53d2210b4ec6a, type: 3}
   teachersHolder: {fileID: 1120112115}
   obstacleHolder: {fileID: 669887497}
+  asSpeed: -7
+  cbmSpeed: -6
+  aprSpeed: -5
 --- !u!4 &144121500
 Transform:
   m_ObjectHideFlags: 0
@@ -2606,6 +2609,8 @@ MonoBehaviour:
   cm: {fileID: 228928361}
   os: {fileID: 669887498}
   controller: {fileID: 589071438}
+  ectsGenerator: {fileID: 309098715}
+  powerUpHolder: {fileID: 640022934}
   pm: {fileID: 1050421032}
   coinSequence: {fileID: 1853175031}
   teachersHolder: {fileID: 1120112115}

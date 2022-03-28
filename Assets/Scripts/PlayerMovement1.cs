@@ -21,6 +21,7 @@ public class PlayerMovement1 : MonoBehaviour
     
     bool canMove;
 
+    int cameraSecs = 0;
     int coffeeSecs = 0;
     int notesSecs = 0;
     bool coffeeOn = false;
@@ -28,6 +29,10 @@ public class PlayerMovement1 : MonoBehaviour
     
     bool alternate1 = false;
     bool alternate2 = false;
+
+    float levelVelocityFactor = 1.1f;
+
+    int numberOfVelocityIncreases = 0;
 
     AudioSource[] sounds;
 
@@ -39,6 +44,12 @@ public class PlayerMovement1 : MonoBehaviour
 
     [SerializeField]
     private MapController controller;
+
+    [SerializeField]
+    private EctsGenerator ectsGenerator;
+
+    [SerializeField]
+    private PowerUpSpawner powerUpHolder;
 
     [SerializeField]
     private ProjectileManager pm;
@@ -117,9 +128,20 @@ public class PlayerMovement1 : MonoBehaviour
 
     void FixedUpdate()
     {
+
+        if (numberOfVelocityIncreases < 5){
+            cameraSecs++;
+            if (cameraSecs >= 500){
+                updateVelocities();
+                Debug.Log("Update velocities");
+                cameraSecs = 0;
+            }
+        }
+
         if(coffeeOn){
             coffeeSecs +=1;
         }
+
         if(notesOn){
             notesSecs +=1;
         }
@@ -178,9 +200,6 @@ public class PlayerMovement1 : MonoBehaviour
             }
             controller.spawnActive = false;
             pressed = KeyState.Off;
-            /*os.body.velocity = new Vector2(0, 0);
-            os.body.angularVelocity = 0.0f;
-            os.body.gravityScale = 1.0f;*/
             if(sounds[3].isPlaying) sounds[3].Stop();
             if(sounds[4].isPlaying) sounds[4].Stop();
             if(sounds[5].isPlaying) sounds[5].Stop();
@@ -191,6 +210,7 @@ public class PlayerMovement1 : MonoBehaviour
             stopProjectiles();
             stopTeachers();
             stopObstacles();
+            stopPowerups();
             teacherSpawner.StopSpawner();
             animator.enabled = false;
             spriteRenderer.sprite = deadSprite;
@@ -273,4 +293,36 @@ public class PlayerMovement1 : MonoBehaviour
             obstacle.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
         }
     }
+
+    void stopPowerups()
+    {
+        foreach (Transform powerup in powerUpHolder.transform){
+            powerup.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
+        }
+    }
+
+    void updateVelocities(){
+        numberOfVelocityIncreases++;
+        os.multiplySpeed(levelVelocityFactor);
+        foreach (Transform obstacle in os.transform){
+            obstacle.GetComponent<Rigidbody2D>().velocity = new Vector2(obstacle.GetComponent<Rigidbody2D>().velocity.x * levelVelocityFactor, 0);
+        }
+
+        ectsGenerator.multiplySpeed(levelVelocityFactor);
+        foreach (Transform coin in coinSequence.transform){
+            coin.GetComponent<Rigidbody2D>().velocity = new Vector2(coin.GetComponent<Rigidbody2D>().velocity.x * levelVelocityFactor, 0);
+        }
+
+        powerUpHolder.multiplySpeed(levelVelocityFactor);
+        foreach (Transform powerup in powerUpHolder.transform){
+            powerup.GetComponent<Rigidbody2D>().velocity = new Vector2(powerup.GetComponent<Rigidbody2D>().velocity.x * levelVelocityFactor, 0);
+        }
+
+        teacherSpawner.multiplySpeed(levelVelocityFactor);
+        foreach (Transform teacher in teachersHolder.transform){
+            teacher.GetComponent<Rigidbody2D>().velocity = new Vector2(teacher.GetComponent<Rigidbody2D>().velocity.x * levelVelocityFactor, 0);
+        }
+
+    }
+
 }

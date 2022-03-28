@@ -20,8 +20,7 @@ public class ScoreController : MonoBehaviour
        }
     }
 
-    // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         incrementMetersCounter += 1;
         if (incrementMetersCounter > 10)
@@ -33,5 +32,11 @@ public class ScoreController : MonoBehaviour
                 puSpawner.SpawnPowerUp();
             }
         }
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
     }
 }

@@ -23,6 +23,16 @@ public class TeacherSpawner : MonoBehaviour
 
     private bool spawn;
 
+    public float asSpeed;
+    public float cbmSpeed;
+    public float aprSpeed;
+
+    public void multiplySpeed(float multiplyFactor)
+    {
+        asSpeed *= multiplyFactor;
+        aprSpeed *= multiplyFactor;
+        cbmSpeed *= multiplyFactor;
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -66,14 +76,17 @@ public class TeacherSpawner : MonoBehaviour
             case 1:
                 teacher = GameObject.Instantiate(cbmPrefab, spawnPoint, new Quaternion(0,0,0,0));
                 teacher.transform.SetParent(teachersHolder.transform);
+                teacher.GetComponent<Rigidbody2D>().velocity = new Vector2(cbmSpeed, 0);
                 break;
             case 2: 
                 teacher = GameObject.Instantiate(asPrefab, spawnPoint, new Quaternion(0,0,0,0));
                 teacher.transform.SetParent(teachersHolder.transform);
+                teacher.GetComponent<Rigidbody2D>().velocity = new Vector2(asSpeed, 0);
                 break;
             case 3: 
                 teacher = GameObject.Instantiate(aprPrefab, spawnPoint, new Quaternion(0,0,0,0));
                 teacher.transform.SetParent(teachersHolder.transform);
+                teacher.GetComponent<Rigidbody2D>().velocity = new Vector2(aprSpeed, 0);
                 break;
         }
     }

@@ -1,13 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class TeacherController : MonoBehaviour
 {
-
-    public float speed;
-    private Rigidbody2D rb;
 
     private IngameUIManager uiManager;
     
@@ -22,8 +16,6 @@ public class TeacherController : MonoBehaviour
     void Start()
     {
         has_given_score = false;
-        rb = GetComponent<Rigidbody2D>();
-        rb.velocity = new Vector2(-speed, 0);
         uiManager = GameObject.Find("IngameUIManager").GetComponent<IngameUIManager>();
     }
 
