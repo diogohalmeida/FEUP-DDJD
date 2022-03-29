@@ -2565,7 +2565,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 0
   m_CollisionDetection: 0
-  m_Constraints: 4
+  m_Constraints: 5
 --- !u!61 &1186423588
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2579,7 +2579,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.20410345, y: 0.15962785}
+  m_Offset: {x: -0.20052218, y: 0.14888379}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -2590,7 +2590,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.90620637, y: 1.793769}
+  m_Size: {x: 0.6411872, y: 1.729305}
   m_EdgeRadius: 0
 --- !u!114 &1186423589
 MonoBehaviour:
@@ -2609,6 +2609,7 @@ MonoBehaviour:
   maxVelocityIncreases: 10
   cm: {fileID: 228928361}
   os: {fileID: 669887498}
+  scoreController: {fileID: 998693262}
   controller: {fileID: 589071438}
   ectsGenerator: {fileID: 309098715}
   powerUpHolder: {fileID: 640022934}

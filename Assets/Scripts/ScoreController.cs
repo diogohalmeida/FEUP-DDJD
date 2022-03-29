@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,7 +8,10 @@ public class ScoreController : MonoBehaviour
     [SerializeField]
     private PowerUpSpawner puSpawner;
 
-    int currentMeters = 0, incrementMetersCounter = 0;
+    int numberOfVelocityIncreases = 1;
+
+    int currentMeters = 0;
+    float incrementMetersCounter = 0f;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,7 +23,7 @@ public class ScoreController : MonoBehaviour
 
     void FixedUpdate()
     {
-        incrementMetersCounter += 1;
+        incrementMetersCounter += 1 * Mathf.Pow(1.1f, numberOfVelocityIncreases);
         if (incrementMetersCounter > 10)
         {
             currentMeters += 1;
@@ -34,9 +35,8 @@ public class ScoreController : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    public void incrementVelocityIncrease(){
+        numberOfVelocityIncreases += 1;
     }
+
 }

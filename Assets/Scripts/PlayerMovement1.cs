@@ -30,6 +30,8 @@ public class PlayerMovement1 : MonoBehaviour
     bool alternate1 = false;
     bool alternate2 = false;
 
+    bool shouldUpdateVelocities = true;
+
     float levelVelocityFactor = 1.1f;
 
     int numberOfVelocityIncreases = 0;
@@ -43,6 +45,9 @@ public class PlayerMovement1 : MonoBehaviour
 
     [SerializeField]
     private ObstacleSpawner os;
+
+    [SerializeField]
+    private ScoreController scoreController;
 
     [SerializeField]
     private MapController controller;
@@ -131,11 +136,10 @@ public class PlayerMovement1 : MonoBehaviour
     void FixedUpdate()
     {
 
-        if (numberOfVelocityIncreases < maxVelocityIncreases){
+        if ((numberOfVelocityIncreases < maxVelocityIncreases) && shouldUpdateVelocities){
             cameraSecs += 1;
             if (cameraSecs >= 500){
                 updateVelocities();
-                Debug.Log("Update velocities");
                 cameraSecs = 0;
             }
         }
@@ -180,7 +184,6 @@ public class PlayerMovement1 : MonoBehaviour
             body.drag = 4;
         } else {
             if(sounds[4].isPlaying) sounds[4].Stop();
-            //if(sounds[5].isPlaying) sounds[5].Stop();
             if(!sounds[3].isPlaying && !gameOver) sounds[3].Play();
             body.drag = 0;
         }
@@ -305,6 +308,10 @@ public class PlayerMovement1 : MonoBehaviour
 
     void updateVelocities(){
         numberOfVelocityIncreases++;
+
+        Debug.Log("Update Velocities");
+
+        scoreController.incrementVelocityIncrease();
 
         cm.speed *= levelVelocityFactor;
         
