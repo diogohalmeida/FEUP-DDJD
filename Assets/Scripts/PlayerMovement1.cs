@@ -34,6 +34,8 @@ public class PlayerMovement1 : MonoBehaviour
 
     int numberOfVelocityIncreases = 0;
 
+    public int maxVelocityIncreases;
+
     AudioSource[] sounds;
 
     [SerializeField]
@@ -129,8 +131,8 @@ public class PlayerMovement1 : MonoBehaviour
     void FixedUpdate()
     {
 
-        if (numberOfVelocityIncreases < 5){
-            cameraSecs++;
+        if (numberOfVelocityIncreases < maxVelocityIncreases){
+            cameraSecs += 1;
             if (cameraSecs >= 500){
                 updateVelocities();
                 Debug.Log("Update velocities");
@@ -303,15 +305,20 @@ public class PlayerMovement1 : MonoBehaviour
 
     void updateVelocities(){
         numberOfVelocityIncreases++;
+
+        cm.speed *= levelVelocityFactor;
+        
         os.multiplySpeed(levelVelocityFactor);
         foreach (Transform obstacle in os.transform){
             obstacle.GetComponent<Rigidbody2D>().velocity = new Vector2(obstacle.GetComponent<Rigidbody2D>().velocity.x * levelVelocityFactor, 0);
         }
 
+        
         ectsGenerator.multiplySpeed(levelVelocityFactor);
         foreach (Transform coin in coinSequence.transform){
             coin.GetComponent<Rigidbody2D>().velocity = new Vector2(coin.GetComponent<Rigidbody2D>().velocity.x * levelVelocityFactor, 0);
         }
+        
 
         powerUpHolder.multiplySpeed(levelVelocityFactor);
         foreach (Transform powerup in powerUpHolder.transform){

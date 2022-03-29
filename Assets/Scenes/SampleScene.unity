@@ -2606,6 +2606,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   deadSprite: {fileID: 21300000, guid: b1b1cfcc5ecf5c148be537fd2f8194e2, type: 3}
   gameOver: 0
+  maxVelocityIncreases: 10
   cm: {fileID: 228928361}
   os: {fileID: 669887498}
   controller: {fileID: 589071438}
