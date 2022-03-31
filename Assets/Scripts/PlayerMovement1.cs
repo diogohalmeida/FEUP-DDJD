@@ -195,7 +195,7 @@ public class PlayerMovement1 : MonoBehaviour
             if(!sounds[0].isPlaying) sounds[0].Play();
             ingameUI.UpdateScore(1);
             Destroy(collider.gameObject);
-        } else if (collider.gameObject.name =="Obstacle(Clone)" || collider.gameObject.name =="apr(Clone)" || collider.gameObject.name =="as(Clone)" || collider.gameObject.name =="cbm(Clone)"){
+        } else if (collider.gameObject.name == "flying_coffee(Clone)" || collider.gameObject.name =="Obstacle(Clone)" || collider.gameObject.name =="apr(Clone)" || collider.gameObject.name =="as(Clone)" || collider.gameObject.name =="cbm(Clone)"){
             // Hits FEUP banner or teacher
             if(collider.gameObject.name == "Obstacle(Clone)"){
                 if(!sounds[6].isPlaying) sounds[6].Play();
