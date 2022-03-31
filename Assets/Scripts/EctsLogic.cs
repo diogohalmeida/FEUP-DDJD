@@ -1,16 +1,39 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 
 public class EctsLogic : MonoBehaviour
 {
 
+    float speed = 0f;
 
+    Rigidbody2D body;
 
-    // Start is called before the first frame update
-    void Start()
+    void Start(){
+        body = GetComponent<Rigidbody2D>();
+    }
+
+    public void SetSpeed(float newSpeed){
+        speed = newSpeed;
+    }
+
+    public void UpdateVelocity(float multiplyFactor){
+        MultiplySpeed(multiplyFactor);
+        body.velocity = new Vector2(speed, 0);
+    }
+
+    void MultiplySpeed(float multiplyFactor)
     {
-        
+        speed *= multiplyFactor;
+    }
+
+    public void Stop()
+    {
+        body.velocity = new Vector2(0, 0);
+    }
+
+    public void Resume()
+    {
+        body.velocity = new Vector2(speed, 0);
     }
 
     // Update is called once per frame

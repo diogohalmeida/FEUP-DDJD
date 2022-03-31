@@ -21,6 +21,8 @@ public class ProjectileManager : MonoBehaviour
 
     private float fillTime;
 
+    private float speed = 8f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -71,15 +73,18 @@ public class ProjectileManager : MonoBehaviour
                 ResetSlider();
             }
             GameObject assignment = GameObject.Instantiate(assignmentPrefab, new Vector2(x, y), new Quaternion(0, 0, 0, 0));
-            assignment.GetComponent<Rigidbody2D>().velocity = new Vector2(8, 0);
+            assignment.GetComponent<Rigidbody2D>().velocity = new Vector2(speed, 0);
             assignment.transform.SetParent(projectileHolder.transform);
+            assignment.GetComponent<ProjectileBehavior>().SetSpeed(speed);
             if (notesPowerup){
                 assignment = GameObject.Instantiate(assignmentPrefab, new Vector2(x, y), new Quaternion(0, 0, 0, 0));
-                assignment.GetComponent<Rigidbody2D>().velocity = new Vector2(8, -1.25f);
+                assignment.GetComponent<Rigidbody2D>().velocity = new Vector2(speed, -1.25f);
                 assignment.transform.SetParent(projectileHolder.transform);
+                assignment.GetComponent<ProjectileBehavior>().SetSpeed(speed);
                 assignment = GameObject.Instantiate(assignmentPrefab, new Vector2(x, y), new Quaternion(0, 0, 0, 0));
-                assignment.GetComponent<Rigidbody2D>().velocity = new Vector2(8, 1.25f);
+                assignment.GetComponent<Rigidbody2D>().velocity = new Vector2(speed, 1.25f);
                 assignment.transform.SetParent(projectileHolder.transform);
+                assignment.GetComponent<ProjectileBehavior>().SetSpeed(speed);
             }
         }
     }

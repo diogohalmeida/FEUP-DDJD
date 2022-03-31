@@ -6,34 +6,46 @@ public class uimanager : MonoBehaviour
 {
 
     [SerializeField] private GameObject gameOverScreen;
+
     [SerializeField] private GameObject ingameUI;
 
-    public PlayerMovement1 pm;
+    [SerializeField] private GameObject pauseScreen;
 
-    private bool gameOverScreenActive;
+    [SerializeField] private PlayerMovement1 player;
+
+    public PlayerMovement1 pm;
 
     // Start is called before the first frame update
     void Start()
     {
-        gameOverScreenActive = false;
         gameOverScreen.SetActive(false);
+
+        pauseScreen.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
 
-        if (pm.gameOver && !gameOverScreenActive){
-            gameOverScreenActive = true;
-        }
-
-        if (pm.gameOver){
-            ingameUI.SetActive(false);
-            gameOverScreen.SetActive(true);
-        }
     }
 
     public void RestartGame(){
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
+
+    public void Pause(){
+        player.Pause();
+        pauseScreen.SetActive(true);
+    }
+
+    public void Resume(){
+        pauseScreen.SetActive(false);
+        player.Resume();
+    }
+
+    public void GameOver(){
+        ingameUI.SetActive(false);
+        gameOverScreen.SetActive(true);
+    }
+
 }

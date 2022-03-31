@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class WarningController : MonoBehaviour
@@ -18,15 +16,18 @@ public class WarningController : MonoBehaviour
 
     Color arrowColor;
 
-    public float speed;
+    float speed = -10f;
 
     private float timer;
-    // Start is called before the first frame update
 
-    public void multiplySpeed(float multiplyFactor)
+    private bool running = true;
+
+    public void setSpeed(float newSpeed)
     {
-        speed *= multiplyFactor;
+        speed = newSpeed;
     }
+
+    // Start is called before the first frame update
     void Start()
     {
         timer = 0;
@@ -38,36 +39,42 @@ public class WarningController : MonoBehaviour
         arrowColor = arrow.GetComponent<SpriteRenderer>().color;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    public void stopTimer(){
+        running = false;
+    }
+
+    public void resumeTimer(){
+        running = true;
     }
 
     void FixedUpdate()
     {
-        timer +=1;
-        if(timer % 5 == 0){
-            if(timer % 10 == 0){
-                arrowColor.a = 1.0f;
+        if (running){
+            timer +=1;
+            if(timer % 5 == 0){
+                if(timer % 10 == 0){
+                    arrowColor.a = 1.0f;
+                }
+                else{
+                    arrowColor.a = 0.0f;
+                }
+                arrow.GetComponent<SpriteRenderer>().color = arrowColor;
             }
-            else{
-                arrowColor.a = 0.0f;
+            if(timer >= 150){
+                timer = 0;
+                float y = this.transform.position.y;
+                Vector3 spawnPoint = new Vector3(10.0f, y, 0);
+                GameObject coffee;
+                coffee = GameObject.Instantiate(coffeePrefab, spawnPoint, new Quaternion(0,0,0,0));
+                coffee.GetComponent<AudioSource>().Play();
+                coffee.transform.SetParent(coffeeHolder.transform);
+                coffee.GetComponent<Rigidbody2D>().velocity = new Vector2(speed, 0);
+                coffee.GetComponent<FlyingCoffeeController>().SetSpeed(speed);
+                this.gameObject.GetComponent<AudioSource>().Stop();
+                Destroy(this.gameObject);
+                Destroy(arrow);
             }
-            arrow.GetComponent<SpriteRenderer>().color = arrowColor;
         }
-        if(timer >= 150){
-            timer = 0;
-            float y = this.transform.position.y;
-            Vector3 spawnPoint = new Vector3(10.0f, y, 0);
-            GameObject coffee;
-            coffee = GameObject.Instantiate(coffeePrefab, spawnPoint, new Quaternion(0,0,0,0));
-            coffee.GetComponent<AudioSource>().Play();
-            coffee.transform.SetParent(coffeeHolder.transform);
-            coffee.GetComponent<Rigidbody2D>().velocity = new Vector2(speed, 0);
-            this.gameObject.GetComponent<AudioSource>().Stop();
-            Destroy(this.gameObject);
-            Destroy(arrow);
-        }
+
     }
 }

@@ -77,16 +77,19 @@ public class TeacherSpawner : MonoBehaviour
                 teacher = GameObject.Instantiate(cbmPrefab, spawnPoint, new Quaternion(0,0,0,0));
                 teacher.transform.SetParent(teachersHolder.transform);
                 teacher.GetComponent<Rigidbody2D>().velocity = new Vector2(cbmSpeed, 0);
+                teacher.GetComponent<TeacherController>().SetSpeed(cbmSpeed);
                 break;
             case 2: 
                 teacher = GameObject.Instantiate(asPrefab, spawnPoint, new Quaternion(0,0,0,0));
                 teacher.transform.SetParent(teachersHolder.transform);
                 teacher.GetComponent<Rigidbody2D>().velocity = new Vector2(asSpeed, 0);
+                teacher.GetComponent<TeacherController>().SetSpeed(asSpeed);
                 break;
             case 3: 
                 teacher = GameObject.Instantiate(aprPrefab, spawnPoint, new Quaternion(0,0,0,0));
                 teacher.transform.SetParent(teachersHolder.transform);
                 teacher.GetComponent<Rigidbody2D>().velocity = new Vector2(aprSpeed, 0);
+                teacher.GetComponent<TeacherController>().SetSpeed(aprSpeed);
                 break;
         }
     }
@@ -105,6 +108,11 @@ public class TeacherSpawner : MonoBehaviour
 
         timer += 0.1f;
         yield return new WaitForSeconds(0.1f);
+    }
+
+    public void resumeSpawner()
+    {
+        spawn = true;
     }
 
 }

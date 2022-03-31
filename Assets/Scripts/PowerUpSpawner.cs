@@ -14,13 +14,27 @@ public class PowerUpSpawner : MonoBehaviour
 
     private float speed = -4f;
 
+    bool spawn = true;
+
     public void multiplySpeed(float multiplyFactor)
     {
         speed *= multiplyFactor;
     }
 
+    public void StopSpawner()
+    {
+        spawn = false;
+    }
+
+    public void ResumeSpawner()
+    {
+        spawn = true;
+    }
 
     public void SpawnPowerUp(){
+        if (!spawn){
+            return;
+        }
         int powerUpN = Random.Range(0,2);
         float x = 10.0f;
         float y = Random.Range(-3.0f, 3.7f);
@@ -45,11 +59,13 @@ public class PowerUpSpawner : MonoBehaviour
             powerup = GameObject.Instantiate(coffeePrefab, spawnPoint, Quaternion.identity);
             powerup.transform.parent = this.gameObject.transform;
             powerup.GetComponent<Rigidbody2D>().velocity = new Vector2(speed, 0);
+            powerup.GetComponent<PowerUpController>().SetSpeed(speed);
         }
         else{ // spawn notes
             powerup = GameObject.Instantiate(notesPrefab, spawnPoint, Quaternion.identity);
             powerup.transform.parent = this.gameObject.transform;
             powerup.GetComponent<Rigidbody2D>().velocity = new Vector2(speed, 0);
+            powerup.GetComponent<PowerUpController>().SetSpeed(speed);
         }
     }
     

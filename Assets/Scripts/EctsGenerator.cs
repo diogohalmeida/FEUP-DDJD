@@ -30,7 +30,6 @@ public class EctsGenerator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //GenerateEctsMap();
         isActive = false;
     }
 
@@ -42,12 +41,6 @@ public class EctsGenerator : MonoBehaviour
             controller.NextSection();
             isActive = false;
         }
-        /*
-        if (generateEcts){
-            GenerateEctsMap(SelectMap());
-            generateEcts = false;
-        }
-        */
     }
 
     public void multiplySpeed(float multiplyFactor)
@@ -91,6 +84,7 @@ public class EctsGenerator : MonoBehaviour
         foreach (colorToObject obj in colorsToObjects){
             if (!obj.color.Equals(pixelColor)){
                 GameObject inst = Instantiate(obj.prefab, new Vector2(x, y-3.5f), Quaternion.identity, coinSequence.transform);
+                inst.GetComponent<EctsLogic>().SetSpeed(speed);
                 inst.GetComponent<Rigidbody2D>().velocity = new Vector2(speed, 0);
             }
         }

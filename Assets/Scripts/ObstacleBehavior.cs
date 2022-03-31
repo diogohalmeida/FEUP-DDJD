@@ -8,13 +8,14 @@ public class ObstacleBehavior : MonoBehaviour
     int type;
     private MapController controller;
 
+    Rigidbody2D body;
+
+    float speed = 0f;
+
     void Start()
     {
         controller = GameObject.Find("MapController").GetComponent<MapController>();
-    }
-
-    void setType(int t){
-        type = t;
+        body = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
@@ -26,5 +27,34 @@ public class ObstacleBehavior : MonoBehaviour
                 controller.NextSection();
             }
         }
+    }
+
+    void setType(int t){
+        type = t;
+    }
+
+    public void SetSpeed(float newSpeed){
+        speed = newSpeed;
+    }
+
+    void MultiplySpeed(float multiplyFactor)
+    {
+        speed *= multiplyFactor;
+    }
+
+    public void UpdateVelocity(float multiplyFactor)
+    {
+        MultiplySpeed(multiplyFactor);
+        body.velocity = new Vector2(speed, 0);
+    }
+
+    public void Stop()
+    {
+        body.velocity = new Vector2(0, 0);
+    }
+
+    public void Resume()
+    {
+        body.velocity = new Vector2(speed, 0);
     }
 }

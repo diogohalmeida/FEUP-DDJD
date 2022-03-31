@@ -18,6 +18,8 @@ public class PlayerMovement1 : MonoBehaviour
     KeyState pressed = KeyState.Off;
 
     public bool gameOver;
+
+    bool paused = false;
     
     bool canMove;
 
@@ -29,6 +31,8 @@ public class PlayerMovement1 : MonoBehaviour
     
     bool alternate1 = false;
     bool alternate2 = false;
+
+    bool gameRunning = false;
 
     bool shouldUpdateVelocities = true;
 
@@ -59,6 +63,9 @@ public class PlayerMovement1 : MonoBehaviour
     private PowerUpSpawner powerUpHolder;
 
     [SerializeField]
+    private FlyingCoffeeSpawner flyingCoffeeHolder;
+
+    [SerializeField]
     private ProjectileManager pm;
 
     [SerializeField]
@@ -78,6 +85,9 @@ public class PlayerMovement1 : MonoBehaviour
 
     [SerializeField]
     private IngameUIManager ingameUI;
+
+    [SerializeField]
+    private uimanager uIManager;
 
     [SerializeField]
     public GameObject scoreBoard;
@@ -101,13 +111,23 @@ public class PlayerMovement1 : MonoBehaviour
         else if(chosenSong == 1){
             if(!sounds[9].isPlaying) sounds[9].Play();
         }
+        flyingCoffeeSpawner.StopSpawner();
+        teacherSpawner.StopSpawner();
+        powerUpHolder.StopSpawner();
+    }
 
+    public void StartGame()
+    {
+        gameRunning = true;
+        flyingCoffeeSpawner.ResumeSpawner();
+        teacherSpawner.resumeSpawner();
+        powerUpHolder.ResumeSpawner();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (canMove){
+        if (canMove && gameRunning){
             if(!sounds[8].isPlaying && !sounds[9].isPlaying){
                 chosenSong = 1-chosenSong;
                 sounds[8+chosenSong].Play();
@@ -217,13 +237,18 @@ public class PlayerMovement1 : MonoBehaviour
             if(sounds[4].isPlaying) sounds[4].Stop();
             if(sounds[5].isPlaying) sounds[5].Stop();
             gameOver = true;
+            uIManager.GameOver();
             canMove = false;
-            cm.speed = 0f;
+            shouldUpdateVelocities = false;
+            cm.Stop();
             stopCoins();
             stopProjectiles();
             stopTeachers();
             stopObstacles();
             stopPowerups();
+            stopFlyingCoffees();
+            stopScore();
+            flyingCoffeeHolder.StopSpawner();
             teacherSpawner.StopSpawner();
             flyingCoffeeSpawner.StopSpawner();
             animator.enabled = false;
@@ -246,21 +271,42 @@ public class PlayerMovement1 : MonoBehaviour
     void stopCoins()
     {
         foreach (Transform coin in coinSequence.transform){
-            coin.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
+            coin.GetComponent<EctsLogic>().Stop();
+        }
+    }
+
+    void resumeCoins()
+    {
+        foreach (Transform coin in coinSequence.transform){
+            coin.GetComponent<EctsLogic>().Resume();
         }
     }
 
     void stopProjectiles()
     {
         foreach (Transform projectile in projectileHolder.transform){
-            projectile.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
+            projectile.GetComponent<ProjectileBehavior>().Stop();
+        }
+    }
+
+    void resumeProjectiles()
+    {
+        foreach (Transform projectile in projectileHolder.transform){
+            projectile.GetComponent<ProjectileBehavior>().Resume();
         }
     }
 
     void stopTeachers()
     {
         foreach (Transform teacher in teachersHolder.transform){
-            teacher.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
+            teacher.GetComponent<TeacherController>().Stop();
+        }
+    }
+
+    void resumeTeachers()
+    {
+        foreach (Transform teacher in teachersHolder.transform){
+            teacher.GetComponent<TeacherController>().Resume();
         }
     }
 
@@ -304,48 +350,142 @@ public class PlayerMovement1 : MonoBehaviour
     void stopObstacles()
     {
         foreach (Transform obstacle in os.transform){
-            obstacle.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
+            obstacle.GetComponent<ObstacleBehavior>().Stop();
+        }
+    }
+
+    void resumeObstacles()
+    {
+        foreach (Transform obstacle in os.transform){
+            obstacle.GetComponent<ObstacleBehavior>().Resume();
         }
     }
 
     void stopPowerups()
     {
         foreach (Transform powerup in powerUpHolder.transform){
-            powerup.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
+            powerup.GetComponent<PowerUpController>().Stop();
         }
     }
 
+    void resumePowerups()
+    {
+        foreach (Transform powerup in powerUpHolder.transform){
+            powerup.GetComponent<PowerUpController>().Resume();
+        }
+    }
+
+    void stopFlyingCoffees()
+    {
+
+        foreach (Transform obj in flyingCoffeeHolder.transform){
+            if (obj.gameObject.name == "flying_coffee(Clone)"){
+                obj.GetComponent<FlyingCoffeeController>().Stop();
+            } else {
+                obj.GetComponent<WarningController>().stopTimer();
+            }
+        }
+
+    }
+
+    void resumeFlyingCoffees()
+    {
+        
+
+        foreach (Transform obj in flyingCoffeeHolder.transform){
+            if (obj.gameObject.name == "flying_coffee(Clone)"){
+                obj.GetComponent<FlyingCoffeeController>().Resume();
+            } else {
+                obj.GetComponent<WarningController>().resumeTimer();
+            }
+        }
+    }
+
+    void stopScore()
+    {
+        scoreBoard.transform.Find("MeterCounter").GetComponent<ScoreController>().stopScore();
+    }
+
+    void resumeScore()
+    {
+        scoreBoard.transform.Find("MeterCounter").GetComponent<ScoreController>().resumeScore();
+    }
+
     void updateVelocities(){
+        if (paused){
+            return;
+        }
         numberOfVelocityIncreases++;
 
         Debug.Log("Update Velocities");
 
         scoreController.incrementVelocityIncrease();
 
-        cm.speed *= levelVelocityFactor;
+        cm.UpdateSpeed(levelVelocityFactor);
         
         os.multiplySpeed(levelVelocityFactor);
         foreach (Transform obstacle in os.transform){
-            obstacle.GetComponent<Rigidbody2D>().velocity = new Vector2(obstacle.GetComponent<Rigidbody2D>().velocity.x * levelVelocityFactor, 0);
+            obstacle.GetComponent<ObstacleBehavior>().UpdateVelocity(levelVelocityFactor);
         }
 
-        
         ectsGenerator.multiplySpeed(levelVelocityFactor);
         foreach (Transform coin in coinSequence.transform){
-            coin.GetComponent<Rigidbody2D>().velocity = new Vector2(coin.GetComponent<Rigidbody2D>().velocity.x * levelVelocityFactor, 0);
+            coin.gameObject.GetComponent<EctsLogic>().UpdateVelocity(levelVelocityFactor);
         }
         
-
         powerUpHolder.multiplySpeed(levelVelocityFactor);
         foreach (Transform powerup in powerUpHolder.transform){
-            powerup.GetComponent<Rigidbody2D>().velocity = new Vector2(powerup.GetComponent<Rigidbody2D>().velocity.x * levelVelocityFactor, 0);
+            powerup.GetComponent<PowerUpController>().UpdateVelocity(levelVelocityFactor);
         }
 
         teacherSpawner.multiplySpeed(levelVelocityFactor);
         foreach (Transform teacher in teachersHolder.transform){
-            teacher.GetComponent<Rigidbody2D>().velocity = new Vector2(teacher.GetComponent<Rigidbody2D>().velocity.x * levelVelocityFactor, 0);
+            teacher.gameObject.GetComponent<TeacherController>().UpdateVelocity(levelVelocityFactor);
         }
-        //coffeeSpawner.multiplySpeed(levelVelocityFactor);
+
+        flyingCoffeeSpawner.multiplySpeed(levelVelocityFactor);
+    }
+
+    public void Pause(){
+        paused = true;
+        controller.spawnActive = false;
+        pressed = KeyState.Off;
+        if(sounds[3].isPlaying) sounds[3].Stop();
+        if(sounds[4].isPlaying) sounds[4].Stop();
+        if(sounds[5].isPlaying) sounds[5].Stop();
+        canMove = false;
+        shouldUpdateVelocities = false;
+        /*cm.Stop();
+        stopCoins();
+        stopProjectiles();
+        stopTeachers();
+        stopObstacles();
+        stopPowerups();
+        stopFlyingCoffees();
+        stopScore();*/
+        flyingCoffeeHolder.StopSpawner();
+        teacherSpawner.StopSpawner();
+        animator.enabled = false;
+        Time.timeScale = 0;
+    }
+
+    public void Resume(){
+        paused = false;
+        canMove = true;
+        animator.enabled = true;
+        shouldUpdateVelocities = true;
+        /*cm.Resume();
+        resumeCoins();
+        resumeProjectiles();
+        resumeTeachers();
+        resumeObstacles();
+        resumePowerups();
+        resumeFlyingCoffees();
+        resumeScore();
+        */
+        flyingCoffeeHolder.ResumeSpawner();
+        teacherSpawner.resumeSpawner();
+        Time.timeScale = 1;
     }
 
 }

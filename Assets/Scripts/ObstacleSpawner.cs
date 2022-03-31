@@ -36,6 +36,7 @@ public class ObstacleSpawner : MonoBehaviour
         obstacle.transform.Find("bar_right").localScale = new Vector2(1, 70);
         obstacle.GetComponent<Rigidbody2D>().velocity = new Vector2(speed, 0);
         obstacle.transform.SetParent(this.gameObject.transform);
+        obstacle.GetComponent<ObstacleBehavior>().SetSpeed(speed);
     }
 
 }

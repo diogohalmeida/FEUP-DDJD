@@ -10,6 +10,8 @@ public class CameraMovement : MonoBehaviour
     public List<Renderer> corridors1;
     public List<Renderer> corridors2;
 
+    float prevSpeed = 4f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -40,4 +42,21 @@ public class CameraMovement : MonoBehaviour
             current_selected2 = randomN;
         }
     }
+
+    public void UpdateSpeed(float multiplyFactor)
+    {
+        speed = speed * multiplyFactor;
+    }
+
+    public void Stop()
+    {
+        prevSpeed = speed;
+        speed = 0f;
+    }
+
+    public void Resume()
+    {
+        speed = prevSpeed;
+    }
+
 }

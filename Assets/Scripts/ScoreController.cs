@@ -10,6 +10,8 @@ public class ScoreController : MonoBehaviour
 
     int numberOfVelocityIncreases = 1;
 
+    bool running = true;
+
     int currentMeters = 0;
     float incrementMetersCounter = 0f;
     // Start is called before the first frame update
@@ -21,8 +23,19 @@ public class ScoreController : MonoBehaviour
        }
     }
 
+    public void stopScore(){
+        running = false;
+    }
+
+    public void resumeScore(){
+        running = true;
+    }
+
     void FixedUpdate()
     {
+        if (!running){
+            return;
+        }
         incrementMetersCounter += 1 * Mathf.Pow(1.1f, numberOfVelocityIncreases);
         if (incrementMetersCounter > 10)
         {
