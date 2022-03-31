@@ -74,6 +74,9 @@ public class PlayerMovement1 : MonoBehaviour
     private TeacherSpawner teacherSpawner;
 
     [SerializeField]
+    private FlyingCoffeeSpawner flyingCoffeeSpawner;
+
+    [SerializeField]
     private IngameUIManager ingameUI;
 
     [SerializeField]
@@ -91,7 +94,7 @@ public class PlayerMovement1 : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
         body = GetComponent<Rigidbody2D>();
-        sounds = GetComponents<AudioSource>(); // 0 -> ECTS Pickup; 1 -> Coffee PowerUp; 2 -> Notes PowerUp; 3 -> Running; 4 -> Jetpack Up; 5 -> Jetpack Down; 6 -> Obstacle Hit; 7 -> Teacher Hit; 8 -> GameMusic1; 9 -> GameMusic2;
+        sounds = GetComponents<AudioSource>(); // 0 -> ECTS Pickup; 1 -> Coffee PowerUp; 2 -> Notes PowerUp; 3 -> Running; 4 -> Jetpack Up; 5 -> Jetpack Down; 6 -> Obstacle Hit; 7 -> Teacher Hit; 8 -> GameMusic1; 9 -> GameMusic2; 10 -> Coffee Hit;
         if(chosenSong == 0){
             if(!sounds[8].isPlaying) sounds[8].Play();
         }
@@ -201,7 +204,12 @@ public class PlayerMovement1 : MonoBehaviour
                 if(!sounds[6].isPlaying) sounds[6].Play();
             }
             else{
-                if(!sounds[7].isPlaying) sounds[7].Play();
+                if(collider.gameObject.name == "flying_coffee(Clone)"){
+                    if(!sounds[10].isPlaying) sounds[10].Play();
+                }
+                else{
+                    if(!sounds[7].isPlaying) sounds[7].Play();
+                }
             }
             controller.spawnActive = false;
             pressed = KeyState.Off;
@@ -217,6 +225,7 @@ public class PlayerMovement1 : MonoBehaviour
             stopObstacles();
             stopPowerups();
             teacherSpawner.StopSpawner();
+            flyingCoffeeSpawner.StopSpawner();
             animator.enabled = false;
             spriteRenderer.sprite = deadSprite;
         } else if(collider.gameObject.name == "coffee(Clone)"){
@@ -336,7 +345,7 @@ public class PlayerMovement1 : MonoBehaviour
         foreach (Transform teacher in teachersHolder.transform){
             teacher.GetComponent<Rigidbody2D>().velocity = new Vector2(teacher.GetComponent<Rigidbody2D>().velocity.x * levelVelocityFactor, 0);
         }
-
+        //coffeeSpawner.multiplySpeed(levelVelocityFactor);
     }
 
 }
