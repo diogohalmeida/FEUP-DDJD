@@ -7,7 +7,12 @@ public class WarningController : MonoBehaviour
     [SerializeField]
     private GameObject coffeePrefab;
 
+    [SerializeField]
+    private GameObject arrowPrefab;
+
     private GameObject coffeeHolder;
+
+    private GameObject arrow;
 
     public float speed;
 
@@ -22,6 +27,9 @@ public class WarningController : MonoBehaviour
     {
         timer = 0;
         coffeeHolder = GameObject.Find("FlyingCoffeeSpawner");
+        float y = this.transform.position.y;
+        Vector3 spawnArrow = new Vector3(8.0f, y, 0);
+        arrow = GameObject.Instantiate(arrowPrefab, spawnArrow, new Quaternion(0,0,0,0));
 
     }
 
@@ -34,7 +42,7 @@ public class WarningController : MonoBehaviour
     void FixedUpdate()
     {
         timer +=1;
-        if(timer >= 300){
+        if(timer >= 200){
             timer = 0;
             float y = this.transform.position.y;
             Vector3 spawnPoint = new Vector3(10.0f, y, 0);
