@@ -98,7 +98,6 @@ public class PlayerMovement1 : MonoBehaviour
     void Start()
     {
         
-        canMove = true;
         chosenSong = Random.Range(0,2);
         gameOver = false;
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -114,14 +113,42 @@ public class PlayerMovement1 : MonoBehaviour
         flyingCoffeeSpawner.StopSpawner();
         teacherSpawner.StopSpawner();
         powerUpHolder.StopSpawner();
+
+        controller.spawnActive = false;
+        pressed = KeyState.Off;
+        if(sounds[3].isPlaying) sounds[3].Stop();
+        if(sounds[4].isPlaying) sounds[4].Stop();
+        if(sounds[5].isPlaying) sounds[5].Stop();
+        canMove = false;
+        shouldUpdateVelocities = false;
+        cm.Stop();
+        stopCoins();
+        stopProjectiles();
+        stopTeachers();
+        stopObstacles();
+        stopPowerups();
+        stopFlyingCoffees();
+        stopScore();
+        animator.enabled = false;
     }
 
     public void StartGame()
     {
+        canMove = true;
+        shouldUpdateVelocities = true;
+        controller.spawnActive = true;
+        cm.Resume();
+        resumeCoins();
+        resumeProjectiles();
+        resumeObstacles();
+        resumePowerups();
+        resumeFlyingCoffees();
+        resumeScore();
         gameRunning = true;
         flyingCoffeeSpawner.ResumeSpawner();
         teacherSpawner.resumeSpawner();
         powerUpHolder.ResumeSpawner();
+        animator.enabled = true;
     }
 
     // Update is called once per frame
@@ -140,6 +167,8 @@ public class PlayerMovement1 : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.P)){
                 pm.Shoot(this.gameObject.transform.position[0], this.gameObject.transform.position[1]);
+            } else if (Input.GetKeyDown(KeyCode.Escape)){
+                uIManager.Pause();
             }
 
             if (transform.position.y > -3.0){
