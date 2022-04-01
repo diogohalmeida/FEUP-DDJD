@@ -229,14 +229,14 @@ public class PlayerMovement1 : MonoBehaviour
                 body.drag = 0;
             }
             if(sounds[5].isPlaying) sounds[5].Stop();
-            if(!sounds[4].isPlaying && !gameOver) sounds[4].Play();
+            if(!sounds[4].isPlaying && !gameOver && gameRunning) sounds[4].Play();
             body.AddForce(new Vector2(0, 50), ForceMode2D.Force);
         } else if (body.velocity[1] > 0) {
-            if(!sounds[5].isPlaying && !gameOver) sounds[5].Play();
+            if(!sounds[5].isPlaying && !gameOver && gameRunning) sounds[5].Play();
             body.drag = 4;
         } else {
             if(sounds[4].isPlaying) sounds[4].Stop();
-            if(!sounds[3].isPlaying && !gameOver) sounds[3].Play();
+            if(!sounds[3].isPlaying && !gameOver && gameRunning) sounds[3].Play();
             body.drag = 0;
         }
     }
