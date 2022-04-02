@@ -52,4 +52,9 @@ public class ScoreController : MonoBehaviour
         numberOfVelocityIncreases += 1;
     }
 
+    public int GetDistanceTravelled()
+    {
+        return currentMeters;
+    }
+
 }

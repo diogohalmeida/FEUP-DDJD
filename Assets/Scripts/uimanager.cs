@@ -23,12 +23,6 @@ public class uimanager : MonoBehaviour
         pauseScreen.SetActive(false);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     public void RestartGame(){
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }

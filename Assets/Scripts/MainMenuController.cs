@@ -11,6 +11,15 @@ public class MainMenuController : MonoBehaviour
     private GameObject ingameUI;
 
     [SerializeField]
+    private GameObject leaderboardScreen;
+
+    [SerializeField]
+    private GameObject settingsScreen;
+
+    [SerializeField]
+    private LeaderboardController leaderboardController;
+
+    [SerializeField]
     private PlayerMovement1 player;
 
     // Start is called before the first frame update
@@ -27,9 +36,23 @@ public class MainMenuController : MonoBehaviour
         Time.timeScale = 1;
     }
 
-    public void LoadLevel()
+    public void ShowLeaderboard()
     {
-        Debug.Log("Load");
-        SceneManager.LoadScene("Game");
+        mainMenu.SetActive(false);
+        leaderboardScreen.SetActive(true);
+        leaderboardController.ShowLeaderboardEntries();
+    }
+
+    public void ShowSettings()
+    {
+        mainMenu.SetActive(false);
+        settingsScreen.SetActive(true);
+    }
+
+    public void ReturnToMainMenu()
+    {
+        settingsScreen.SetActive(false);
+        leaderboardScreen.SetActive(false);
+        mainMenu.SetActive(true);
     }
 }

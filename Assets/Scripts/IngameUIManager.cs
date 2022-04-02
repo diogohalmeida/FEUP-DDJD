@@ -15,8 +15,16 @@ public class IngameUIManager : MonoBehaviour
     [SerializeField]
     private GameObject notesPowerup;
 
+    private int score = 0;
+
     public void UpdateScore(int amount){
         scoreUI.UpdateScore(amount);
+        score += amount;
+    }
+
+    public int GetScore()
+    {
+        return score;
     }
 
     public void SetCoffeePowerup(bool status){

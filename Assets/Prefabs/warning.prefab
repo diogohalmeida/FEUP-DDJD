@@ -99,7 +99,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   coffeePrefab: {fileID: 7803678607019335839, guid: 5f1b2049c5ffc4f48964b8f38260e3bb, type: 3}
   arrowPrefab: {fileID: 628729118512644657, guid: 0efbd062fda03bb4981bfdbe2de63b5c, type: 3}
-  speed: -10
 --- !u!95 &-517989315235376392
 Animator:
   serializedVersion: 3
@@ -128,7 +127,7 @@ AudioSource:
   m_GameObject: {fileID: 3834393792460317519}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: b02d64922c051d940b816619a53b4ab5, type: 2}
   m_audioClip: {fileID: 8300000, guid: b3fc6ce3b79838e4c8266bbf3e214447, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 0.15

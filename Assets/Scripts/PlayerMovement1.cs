@@ -48,6 +48,12 @@ public class PlayerMovement1 : MonoBehaviour
     private CameraMovement cm;
 
     [SerializeField]
+    private LeaderboardController leaderboard;
+
+    [SerializeField]
+    private Text gameOverScore;
+
+    [SerializeField]
     private ObstacleSpawner os;
 
     [SerializeField]
@@ -267,6 +273,9 @@ public class PlayerMovement1 : MonoBehaviour
             if(sounds[5].isPlaying) sounds[5].Stop();
             gameOver = true;
             uIManager.GameOver();
+            int s = scoreController.GetDistanceTravelled() + ingameUI.GetScore();
+            leaderboard.SetScore(s);
+            gameOverScore.text = s.ToString();
             canMove = false;
             shouldUpdateVelocities = false;
             cm.Stop();

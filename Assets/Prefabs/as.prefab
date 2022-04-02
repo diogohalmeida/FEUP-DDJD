@@ -139,7 +139,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e55ac036959cc184fa25928a1e938228, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 7
   extraECTSPrefab: {fileID: 3008070786121366396, guid: 362d5fb991f556940b40b400f0ee8df0, type: 3}
 --- !u!61 &-7231164359183756377
 BoxCollider2D:
@@ -176,7 +175,7 @@ AudioSource:
   m_GameObject: {fileID: 7235830966659403100}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: b02d64922c051d940b816619a53b4ab5, type: 2}
   m_audioClip: {fileID: 8300000, guid: 36f4118999fcc5849b8d8f4a53e0d82d, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 0.1
