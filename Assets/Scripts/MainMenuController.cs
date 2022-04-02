@@ -22,10 +22,15 @@ public class MainMenuController : MonoBehaviour
     [SerializeField]
     private PlayerMovement1 player;
 
+    [SerializeField]
+    private GameObject arrow;
+
+    private bool female;
+
     // Start is called before the first frame update
     void Start()
     {
-        //Time.timeScale = 0;
+
     }
 
     public void StartGame()
@@ -41,6 +46,17 @@ public class MainMenuController : MonoBehaviour
         mainMenu.SetActive(false);
         leaderboardScreen.SetActive(true);
         leaderboardController.ShowLeaderboardEntries();
+    }
+
+    public void SwitchSprite()
+    {
+
+        female = !female;
+        player.SetSprite(female);
+        int x = -860;
+        if(female) x = -680;
+        Vector3 position = new Vector3(x, -130, 0);
+        arrow.GetComponent<RectTransform>().anchoredPosition = position;
     }
 
     public void ShowSettings()
