@@ -166,13 +166,11 @@ public class PlayerMovement1 : MonoBehaviour
             spriteRenderer.sprite = main_char_f;
             deadSprite = deadSprite_f;
             GetComponent<Animator>().runtimeAnimatorController = animator_f;
-            Debug.Log("mete na gaja");
         }
         else{
             spriteRenderer.sprite = main_char_m;
             deadSprite = deadSprite_m;
             GetComponent<Animator>().runtimeAnimatorController = animator_m;
-            Debug.Log("mete no gajo");
         }
     }
 
@@ -553,6 +551,9 @@ public class PlayerMovement1 : MonoBehaviour
         stopFlyingCoffees();
         stopScore();*/
         flyingCoffeeHolder.StopSpawner();
+        foreach (GameObject warnings in GameObject.FindGameObjectsWithTag("Warnings")){
+            warnings.GetComponent<AudioSource>().Pause();
+        }
         teacherSpawner.StopSpawner();
         animator.enabled = false;
         Time.timeScale = 0;
@@ -576,6 +577,9 @@ public class PlayerMovement1 : MonoBehaviour
         resumeScore();
         */
         flyingCoffeeHolder.ResumeSpawner();
+        foreach (GameObject warnings in GameObject.FindGameObjectsWithTag("Warnings")){
+            warnings.GetComponent<AudioSource>().UnPause();
+        }
         teacherSpawner.resumeSpawner();
         Time.timeScale = 1;
     }

@@ -22,6 +22,8 @@ public class WarningController : MonoBehaviour
 
     private bool running = true;
 
+    private AudioSource warningSound;
+
     public void setSpeed(float newSpeed)
     {
         speed = newSpeed;
@@ -35,7 +37,8 @@ public class WarningController : MonoBehaviour
         float y = this.transform.position.y;
         spawnArrow = new Vector3(8.5f, y, 0);
         arrow = GameObject.Instantiate(arrowPrefab, spawnArrow, new Quaternion(0,0,0,0));
-        this.gameObject.GetComponent<AudioSource>().Play();
+        warningSound = GetComponent<AudioSource>();
+        warningSound.Play();
         arrowColor = arrow.GetComponent<SpriteRenderer>().color;
     }
 
@@ -45,6 +48,14 @@ public class WarningController : MonoBehaviour
 
     public void resumeTimer(){
         running = true;
+    }
+
+    public void pauseSound(){
+        warningSound.Pause();
+    }
+
+    public void unpauseSound(){
+        warningSound.UnPause();
     }
 
     void FixedUpdate()
@@ -75,6 +86,5 @@ public class WarningController : MonoBehaviour
                 Destroy(arrow);
             }
         }
-
     }
 }
