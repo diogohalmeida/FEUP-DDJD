@@ -1440,9 +1440,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 50
-    m_FontStyle: 2
+    m_Font: {fileID: 12800000, guid: 66567e08976f6a3488e2b5d100377352, type: 3}
+    m_FontSize: 40
+    m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 4
     m_MaxSize: 50
@@ -1452,7 +1452,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Your name...
+  m_Text: INSERT YOUR NAME
 --- !u!222 &183159349
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1489,7 +1489,7 @@ RectTransform:
   m_GameObject: {fileID: 202865708}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children: []
   m_Father: {fileID: 2010103940}
   m_RootOrder: 1
@@ -1497,7 +1497,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -0.000056267, y: 298}
-  m_SizeDelta: {x: 722.519, y: 255.0047}
+  m_SizeDelta: {x: 348, y: 89}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &202865710
 Animator:
@@ -1540,7 +1540,7 @@ MonoBehaviour:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: 379cef86a40490d419186707e306e07f, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -1615,10 +1615,10 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 66567e08976f6a3488e2b5d100377352, type: 3}
-    m_FontSize: 64
+    m_FontSize: 50
     m_FontStyle: 1
     m_BestFit: 0
-    m_MinSize: 6
+    m_MinSize: 5
     m_MaxSize: 64
     m_Alignment: 4
     m_AlignByGeometry: 0
@@ -1626,7 +1626,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Resume
+  m_Text: RESUME
 --- !u!222 &225076661
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2919,10 +2919,10 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 66567e08976f6a3488e2b5d100377352, type: 3}
-    m_FontSize: 64
+    m_FontSize: 50
     m_FontStyle: 1
     m_BestFit: 0
-    m_MinSize: 6
+    m_MinSize: 5
     m_MaxSize: 64
     m_Alignment: 4
     m_AlignByGeometry: 0
@@ -6386,7 +6386,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 24300002, guid: b02d64922c051d940b816619a53b4ab5, type: 2}
   m_audioClip: {fileID: 8300000, guid: 6229211f417d5f240b5fd1ce64ba7ded, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.1
   m_Pitch: 1
   Loop: 0
   Mute: 0
