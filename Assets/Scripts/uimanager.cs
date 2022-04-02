@@ -11,13 +11,23 @@ public class uimanager : MonoBehaviour
 
     [SerializeField] private GameObject pauseScreen;
 
-    [SerializeField] private PlayerMovement1 player;
+    [SerializeField] private PlayerMovement1 player1;
 
-    public PlayerMovement1 pm;
+    [SerializeField] private PlayerMovement1 player2;
+
+    private PlayerMovement1 player;
 
     // Start is called before the first frame update
     void Start()
     {
+        if(player1.gameObject.activeSelf){
+            player = player1;
+        }
+        else{
+            if(player2.gameObject.activeSelf){
+                player = player2;
+            }
+        }
         gameOverScreen.SetActive(false);
 
         pauseScreen.SetActive(false);

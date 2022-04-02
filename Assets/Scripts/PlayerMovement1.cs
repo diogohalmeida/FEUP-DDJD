@@ -12,12 +12,32 @@ public class PlayerMovement1 : MonoBehaviour
     SpriteRenderer spriteRenderer;
 
     [SerializeField]
+    private Sprite main_char_m;
+
+    [SerializeField]
+    private Sprite main_char_f;
+
+
+    [SerializeField]
+    private Sprite deadSprite_m;
+
+    [SerializeField]
+    private Sprite deadSprite_f;
+
     private Sprite deadSprite;
+
+    [SerializeField]
+    private RuntimeAnimatorController animator_m;
+    
+    [SerializeField]
+    private RuntimeAnimatorController animator_f;
 
     public enum KeyState { Space, Off }
     KeyState pressed = KeyState.Off;
 
     public bool gameOver;
+
+    private bool female = false;
 
     bool paused = false;
     
@@ -104,18 +124,19 @@ public class PlayerMovement1 : MonoBehaviour
     void Start()
     {
         
+        if(female){
+            deadSprite = deadSprite_f;
+        }
+        else{
+            deadSprite = deadSprite_m;
+        }
         chosenSong = Random.Range(0,2);
         gameOver = false;
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
         body = GetComponent<Rigidbody2D>();
-        sounds = GetComponents<AudioSource>(); // 0 -> ECTS Pickup; 1 -> Coffee PowerUp; 2 -> Notes PowerUp; 3 -> Running; 4 -> Jetpack Up; 5 -> Jetpack Down; 6 -> Obstacle Hit; 7 -> Teacher Hit; 8 -> GameMusic1; 9 -> GameMusic2; 10 -> Coffee Hit;
-        if(chosenSong == 0){
-            if(!sounds[8].isPlaying) sounds[8].Play();
-        }
-        else if(chosenSong == 1){
-            if(!sounds[9].isPlaying) sounds[9].Play();
-        }
+        sounds = GetComponents<AudioSource>(); // 0 -> ECTS Pickup; 1 -> Coffee PowerUp; 2 -> Notes PowerUp; 3 -> Running; 4 -> Jetpack Up; 5 -> Jetpack Down; 6 -> Obstacle Hit; 7 -> Teacher Hit; 8 -> GameMusic1; 9 -> GameMusic2; 10 -> Coffee Hit; 11 -> MainMenu Music; 12 -> GameOver Music;
+        if(!sounds[11].isPlaying) sounds[11].Play();
         flyingCoffeeSpawner.StopSpawner();
         teacherSpawner.StopSpawner();
         powerUpHolder.StopSpawner();
@@ -138,6 +159,21 @@ public class PlayerMovement1 : MonoBehaviour
         animator.enabled = false;
     }
 
+    public void SetSprite(bool isFemale)
+    {
+        female = isFemale;
+        if(female){
+            spriteRenderer.sprite = main_char_f;
+            deadSprite = deadSprite_f;
+            GetComponent<Animator>().runtimeAnimatorController = animator_f;
+        }
+        else{
+            spriteRenderer.sprite = main_char_m;
+            deadSprite = deadSprite_m;
+            GetComponent<Animator>().runtimeAnimatorController = animator_m;
+        }
+    }
+
     public void StartGame()
     {
         canMove = true;
@@ -155,6 +191,13 @@ public class PlayerMovement1 : MonoBehaviour
         teacherSpawner.resumeSpawner();
         powerUpHolder.ResumeSpawner();
         animator.enabled = true;
+        if(sounds[11].isPlaying) sounds[11].Stop();
+        if(chosenSong == 0){
+            if(!sounds[8].isPlaying) sounds[8].Play();
+        }
+        else if(chosenSong == 1){
+            if(!sounds[9].isPlaying) sounds[9].Play();
+        }
     }
 
     // Update is called once per frame
@@ -184,7 +227,7 @@ public class PlayerMovement1 : MonoBehaviour
             else {
                 if(sounds[5].isPlaying) sounds[5].Stop();
                 animator.SetBool("is_flying", false);
-                if(!sounds[3].isPlaying) sounds[3].Play();
+                if(!sounds[3].isPlaying && !gameOver && gameRunning) sounds[3].Play();
             }
 
             reduceUIOpacity();
@@ -271,7 +314,10 @@ public class PlayerMovement1 : MonoBehaviour
             if(sounds[3].isPlaying) sounds[3].Stop();
             if(sounds[4].isPlaying) sounds[4].Stop();
             if(sounds[5].isPlaying) sounds[5].Stop();
+            if(sounds[8].isPlaying) sounds[8].Stop();
+            if(sounds[9].isPlaying) sounds[9].Stop();
             gameOver = true;
+            if(!sounds[12].isPlaying) sounds[12].Play();
             uIManager.GameOver();
             int s = scoreController.GetDistanceTravelled() + ingameUI.GetScore();
             leaderboard.SetScore(s);
@@ -491,7 +537,10 @@ public class PlayerMovement1 : MonoBehaviour
         if(sounds[3].isPlaying) sounds[3].Stop();
         if(sounds[4].isPlaying) sounds[4].Stop();
         if(sounds[5].isPlaying) sounds[5].Stop();
+        if(sounds[8].isPlaying) sounds[8].Pause();
+        if(sounds[9].isPlaying) sounds[9].Pause();
         canMove = false;
+        gameRunning = false;
         shouldUpdateVelocities = false;
         /*cm.Stop();
         stopCoins();
@@ -502,6 +551,9 @@ public class PlayerMovement1 : MonoBehaviour
         stopFlyingCoffees();
         stopScore();*/
         flyingCoffeeHolder.StopSpawner();
+        foreach (GameObject warnings in GameObject.FindGameObjectsWithTag("Warnings")){
+            warnings.GetComponent<AudioSource>().Pause();
+        }
         teacherSpawner.StopSpawner();
         animator.enabled = false;
         Time.timeScale = 0;
@@ -510,8 +562,11 @@ public class PlayerMovement1 : MonoBehaviour
     public void Resume(){
         paused = false;
         canMove = true;
+        gameRunning = true;
         animator.enabled = true;
         shouldUpdateVelocities = true;
+        if(!sounds[8].isPlaying) sounds[8].UnPause();
+        if(!sounds[9].isPlaying) sounds[9].UnPause();
         /*cm.Resume();
         resumeCoins();
         resumeProjectiles();
@@ -522,6 +577,9 @@ public class PlayerMovement1 : MonoBehaviour
         resumeScore();
         */
         flyingCoffeeHolder.ResumeSpawner();
+        foreach (GameObject warnings in GameObject.FindGameObjectsWithTag("Warnings")){
+            warnings.GetComponent<AudioSource>().UnPause();
+        }
         teacherSpawner.resumeSpawner();
         Time.timeScale = 1;
     }
