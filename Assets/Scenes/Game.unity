@@ -1271,6 +1271,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   musicMixer: {fileID: 0}
   soundEffectsMixer: {fileID: 24100000, guid: b02d64922c051d940b816619a53b4ab5, type: 2}
+  musicSlider: {fileID: 397779947}
+  effectsSlider: {fileID: 106418792}
 --- !u!1 &144121498
 GameObject:
   m_ObjectHideFlags: 0
@@ -2158,6 +2160,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   musicMixer: {fileID: 24100000, guid: 42b994791001bc84bafdd93c9b57acde, type: 2}
   soundEffectsMixer: {fileID: 0}
+  musicSlider: {fileID: 397779947}
+  effectsSlider: {fileID: 106418792}
 --- !u!114 &397779947
 MonoBehaviour:
   m_ObjectHideFlags: 0
