@@ -72,25 +72,26 @@ public class TeacherSpawner : MonoBehaviour
         }
         int rotation = Random.Range(1,4);
         GameObject teacher;
+        rotation = 1;
         switch(rotation){
             case 1:
                 teacher = GameObject.Instantiate(cbmPrefab, spawnPoint, new Quaternion(0,0,0,0));
                 teacher.transform.SetParent(teachersHolder.transform);
                 teacher.GetComponent<Rigidbody2D>().velocity = new Vector2(cbmSpeed, 0);
-                teacher.GetComponent<TeacherController>().SetSpeed(cbmSpeed);
+                teacher.GetComponent<TeacherController>().SetSpeedAndType(cbmSpeed, 3);
                 break;
             case 2: 
                 teacher = GameObject.Instantiate(asPrefab, spawnPoint, new Quaternion(0,0,0,0));
                 teacher.transform.SetParent(teachersHolder.transform);
                 teacher.GetComponent<Rigidbody2D>().velocity = new Vector2(asSpeed, 0);
-                teacher.GetComponent<TeacherController>().SetSpeed(asSpeed);
+                teacher.GetComponent<TeacherController>().SetSpeedAndType(asSpeed, 2);
                 break;
             case 3: 
                 teacher = GameObject.Instantiate(aprPrefab, spawnPoint, new Quaternion(0,0,0,0));
                 teacher.transform.SetParent(teachersHolder.transform);
                 float yVelocity = Random.Range(-3f, 3f);
                 teacher.GetComponent<Rigidbody2D>().velocity = new Vector2(aprSpeed, yVelocity);
-                teacher.GetComponent<TeacherController>().SetSpeed(aprSpeed);
+                teacher.GetComponent<TeacherController>().SetSpeedAndType(aprSpeed, 1);
                 break;
         }
     }

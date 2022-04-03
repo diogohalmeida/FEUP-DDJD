@@ -140,6 +140,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   extraECTSPrefab: {fileID: 3008070786121366396, guid: 362d5fb991f556940b40b400f0ee8df0, type: 3}
+  playerTransform: {fileID: 0}
+  cbmYSpeed: 1
 --- !u!61 &3132017307279803859
 BoxCollider2D:
   m_ObjectHideFlags: 0
