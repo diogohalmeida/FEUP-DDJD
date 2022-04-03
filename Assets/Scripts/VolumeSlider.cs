@@ -24,6 +24,8 @@ public class VolumeSlider : MonoBehaviour
     {
         musicVolume = PlayerPrefs.GetFloat("musicVolume");
         effectsVolume = PlayerPrefs.GetFloat("effectsVolume");
+        musicMixer.SetFloat("MusicVolume", Mathf.Log10(musicVolume) * 20);
+        soundEffectsMixer.SetFloat("SoundEffectsVolume", Mathf.Log10(effectsVolume) * 20);
         musicSlider.value = musicVolume;
         effectsSlider.value = effectsVolume;
     }

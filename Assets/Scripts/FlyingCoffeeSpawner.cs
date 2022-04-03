@@ -64,7 +64,7 @@ public class FlyingCoffeeSpawner : MonoBehaviour
         if (timer >= maxTimer){
             SpawnWarning();
             timer = 0;
-            maxTimer = Random.Range(10f, 100f);
+            maxTimer = Random.Range(50f, 500f);
         }
 
         timer += 0.1f;

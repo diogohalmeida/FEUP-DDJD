@@ -29,7 +29,11 @@ public class TeacherController : MonoBehaviour
     {
         if ((transform.position).x < -10){
             Destroy(this.gameObject);
-        }
+        } else if (transform.position.y <= -3 && body.velocity.y < 0){
+            body.velocity = new Vector2(body.velocity.x, -body.velocity.y);
+        } else if (transform.position.y >= 3.75 && body.velocity.y > 0){
+            body.velocity = new Vector2(body.velocity.x, -body.velocity.y);
+        } 
 
     }
 
@@ -60,6 +64,7 @@ public class TeacherController : MonoBehaviour
         }
     }
 
+
     public void SetSpeed(float newSpeed){
         speed = newSpeed;
     }
@@ -71,7 +76,7 @@ public class TeacherController : MonoBehaviour
 
     public void UpdateVelocity(float multiplyFactor){
         MultiplySpeed(multiplyFactor);
-        body.velocity = new Vector2(speed, 0);
+        body.velocity = new Vector2(speed, body.velocity.y);
     }
 
     public void Stop(){

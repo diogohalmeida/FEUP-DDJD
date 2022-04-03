@@ -19,7 +19,7 @@ public class MapController : MonoBehaviour
     {
         spawnActive = true;
         sectionActive = false;
-        mapSection = 3;
+        mapSection = Random.Range(0, 5);
     }
 
     // Update is called once per frame
@@ -55,10 +55,11 @@ public class MapController : MonoBehaviour
 
     public void NextSection(){
         sectionActive = false;
-        if (mapSection == 4){
+        mapSection = Random.Range(0, 5);
+        /*if (mapSection == 4){
             mapSection = 0;
         } else {
             mapSection++;
-        }
+        }*/
     }
 }

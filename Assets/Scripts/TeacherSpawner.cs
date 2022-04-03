@@ -88,7 +88,8 @@ public class TeacherSpawner : MonoBehaviour
             case 3: 
                 teacher = GameObject.Instantiate(aprPrefab, spawnPoint, new Quaternion(0,0,0,0));
                 teacher.transform.SetParent(teachersHolder.transform);
-                teacher.GetComponent<Rigidbody2D>().velocity = new Vector2(aprSpeed, 0);
+                float yVelocity = Random.Range(-3f, 3f);
+                teacher.GetComponent<Rigidbody2D>().velocity = new Vector2(aprSpeed, yVelocity);
                 teacher.GetComponent<TeacherController>().SetSpeed(aprSpeed);
                 break;
         }

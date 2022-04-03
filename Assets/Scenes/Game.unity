@@ -1269,7 +1269,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b37d49f4ba3ee9f46bdc2132ddf1eaad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  musicMixer: {fileID: 0}
+  musicMixer: {fileID: 24100000, guid: 42b994791001bc84bafdd93c9b57acde, type: 2}
   soundEffectsMixer: {fileID: 24100000, guid: b02d64922c051d940b816619a53b4ab5, type: 2}
   musicSlider: {fileID: 397779947}
   effectsSlider: {fileID: 106418792}
@@ -2159,7 +2159,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   musicMixer: {fileID: 24100000, guid: 42b994791001bc84bafdd93c9b57acde, type: 2}
-  soundEffectsMixer: {fileID: 0}
+  soundEffectsMixer: {fileID: 24100000, guid: b02d64922c051d940b816619a53b4ab5, type: 2}
   musicSlider: {fileID: 397779947}
   effectsSlider: {fileID: 106418792}
 --- !u!114 &397779947
@@ -8045,6 +8045,7 @@ GameObject:
   - component: {fileID: 1583990141}
   - component: {fileID: 1583990143}
   - component: {fileID: 1583990142}
+  - component: {fileID: 1583990144}
   m_Layer: 5
   m_Name: MainMenu
   m_TagString: Untagged
@@ -8116,6 +8117,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1583990140}
   m_CullTransparentMesh: 1
+--- !u!114 &1583990144
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1583990140}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b37d49f4ba3ee9f46bdc2132ddf1eaad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  musicMixer: {fileID: 24100000, guid: 42b994791001bc84bafdd93c9b57acde, type: 2}
+  soundEffectsMixer: {fileID: 24100000, guid: b02d64922c051d940b816619a53b4ab5, type: 2}
+  musicSlider: {fileID: 397779947}
+  effectsSlider: {fileID: 106418792}
 --- !u!1 &1592883567
 GameObject:
   m_ObjectHideFlags: 0
