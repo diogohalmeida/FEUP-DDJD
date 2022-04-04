@@ -23,20 +23,31 @@ public class LeaderboardController : MonoBehaviour
 
     private MyList leaderboardEntries = new MyList();
 
+    bool hasSavedScore = false;
+
     private int score = 0;
 
     public int maxLeaderboardEntries;
 
     void Start()
     {
+        initEntries();
         LoadLeaderboard();
     }
 
     public void SaveScore()
     {
+        if (hasSavedScore) return;
         string name = nameInputField.text;
         InsertScoreOnLeaderboard(score, name);
         SaveLeaderboard();
+        hasSavedScore = true;
+    }
+
+    void initEntries()
+    {
+        leaderboardEntries.scores = new List<int>{0, 0, 0, 0, 0};
+        leaderboardEntries.names = new List<string>{"-----", "-----", "-----", "-----", "-----"};
     }
 
     public void SetScore(int newScore)
@@ -73,14 +84,36 @@ public class LeaderboardController : MonoBehaviour
 
     private void SaveLeaderboard()
     {
-        string toWrite = JsonUtility.ToJson(leaderboardEntries);
-        File.WriteAllText("Data/leaderboard.json", toWrite);
+        //string toWrite = JsonUtility.ToJson(leaderboardEntries);
+        //File.WriteAllText("Data/leaderboard.json", toWrite);
+        for (int i = 0; i < maxLeaderboardEntries; i++) //WebGL does not support storing on local files and PlayerPrefs does not support lists :(
+        {
+            PlayerPrefs.SetString("Leaderboard_name_" + i.ToString(), leaderboardEntries.names[i]);
+            PlayerPrefs.SetInt("Leaderboard_score_" + i.ToString(), leaderboardEntries.scores[i]);
+        }
+        PlayerPrefs.Save();
     }
 
     private void LoadLeaderboard()
     {
-        string leaderboard = File.ReadAllText("Data/leaderboard.json");
-        leaderboardEntries = JsonUtility.FromJson<MyList>(leaderboard);
+        //string leaderboard = File.ReadAllText("Data/leaderboard.json");
+        //leaderboardEntries = JsonUtility.FromJson<MyList>(leaderboard);
+
+        for (int i = 0; i < maxLeaderboardEntries; i++) //WebGL does not support storing on local files and PlayerPrefs does not support lists :(
+        {
+            if (PlayerPrefs.HasKey("Leaderboard_name_" + i.ToString())){
+                leaderboardEntries.names[i] = PlayerPrefs.GetString("Leaderboard_name_" + i.ToString());
+            } else {
+                leaderboardEntries.names[i] = "-----";
+            }
+            
+            if (PlayerPrefs.HasKey("Leaderboard_score_" + i.ToString())){
+                leaderboardEntries.scores[i] = PlayerPrefs.GetInt("Leaderboard_score_" + i.ToString());
+            } else {
+                leaderboardEntries.scores[i] = 0;
+            }
+            
+        }
     }
 
     public void ShowLeaderboardEntries()
