@@ -25,6 +25,7 @@ public class VolumeSlider : MonoBehaviour
         if (PlayerPrefs.HasKey("musicVolume")){
             musicVolume = PlayerPrefs.GetFloat("musicVolume");
         }
+        
         if (PlayerPrefs.HasKey("effectsVolume")){
             effectsVolume = PlayerPrefs.GetFloat("effectsVolume");
         }

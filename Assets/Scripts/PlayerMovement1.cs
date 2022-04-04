@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -123,6 +121,14 @@ public class PlayerMovement1 : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
+        if (!PlayerPrefs.HasKey("musicVolume")){
+            PlayerPrefs.SetFloat("musicVolume", 1f);
+        }
+
+        if (!PlayerPrefs.HasKey("effectsVolume")){
+            PlayerPrefs.SetFloat("effectsVolume", 1f);
+        }
         
         if(female){
             deadSprite = deadSprite_f;
