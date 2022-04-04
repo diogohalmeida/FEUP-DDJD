@@ -562,6 +562,7 @@ public class PlayerMovement1 : MonoBehaviour
     public void Resume(){
         paused = false;
         canMove = true;
+        controller.spawnActive = true;
         gameRunning = true;
         animator.enabled = true;
         shouldUpdateVelocities = true;
@@ -581,6 +582,7 @@ public class PlayerMovement1 : MonoBehaviour
             warnings.GetComponent<AudioSource>().UnPause();
         }
         teacherSpawner.resumeSpawner();
+        powerUpHolder.ResumeSpawner();
         Time.timeScale = 1;
     }
 
