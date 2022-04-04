@@ -35,7 +35,7 @@ public class WarningController : MonoBehaviour
         timer = 0;
         coffeeHolder = GameObject.Find("FlyingCoffeeSpawner");
         float y = this.transform.position.y;
-        spawnArrow = new Vector3(8.5f, y, 0);
+        spawnArrow = new Vector3(6.4f, y, 0);
         arrow = GameObject.Instantiate(arrowPrefab, spawnArrow, new Quaternion(0,0,0,0));
         warningSound = GetComponent<AudioSource>();
         warningSound.Play();

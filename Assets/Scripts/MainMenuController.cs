@@ -53,9 +53,9 @@ public class MainMenuController : MonoBehaviour
 
         female = !female;
         player.SetSprite(female);
-        int x = -860;
-        if(female) x = -680;
-        Vector3 position = new Vector3(x, -130, 0);
+        int x = -800;
+        if(female) x = -615;
+        Vector3 position = new Vector3(x, -230, 0);
         arrow.GetComponent<RectTransform>().anchoredPosition = position;
     }
 

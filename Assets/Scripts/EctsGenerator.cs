@@ -34,7 +34,7 @@ public class EctsGenerator : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
 
         if (coinSequence.transform.childCount == 0 && isActive){

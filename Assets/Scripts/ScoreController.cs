@@ -42,7 +42,7 @@ public class ScoreController : MonoBehaviour
             currentMeters += 1;
             this.GetComponent<Text>().text = currentMeters.ToString().PadLeft(4, '0') + "M";
             incrementMetersCounter = 0;
-            if(currentMeters % 500 == 0){
+            if(currentMeters % 250 == 0){
                 puSpawner.SpawnPowerUp();
             }
         }

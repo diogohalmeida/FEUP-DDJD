@@ -19,7 +19,7 @@ public class ObstacleBehavior : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         if (this.gameObject.transform.position[0] <= -16){
             Destroy(this.gameObject);
@@ -29,7 +29,7 @@ public class ObstacleBehavior : MonoBehaviour
         }
     }
 
-    void setType(int t){
+    public void setType(int t){
         type = t;
     }
 

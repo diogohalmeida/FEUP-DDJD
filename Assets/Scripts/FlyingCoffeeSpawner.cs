@@ -39,7 +39,7 @@ public class FlyingCoffeeSpawner : MonoBehaviour
         if (!spawn) {
             return;
         }
-        float x = 7.5f;
+        float x = 5.5f;
         float y = Random.Range(-3.0f, 3.7f);
         Vector3 spawnPoint = new Vector3(x, y, 0);
         GameObject warning;
