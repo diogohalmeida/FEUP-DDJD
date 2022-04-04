@@ -72,7 +72,6 @@ public class TeacherSpawner : MonoBehaviour
         }
         int rotation = Random.Range(1,4);
         GameObject teacher;
-        rotation = 1;
         switch(rotation){
             case 1:
                 teacher = GameObject.Instantiate(cbmPrefab, spawnPoint, new Quaternion(0,0,0,0));

@@ -30,8 +30,6 @@ public class LeaderboardController : MonoBehaviour
     void Start()
     {
         LoadLeaderboard();
-        Debug.Log("Leaderboard Loaded");
-        PrintLeaderboard();
     }
 
     public void SaveScore()
@@ -39,7 +37,6 @@ public class LeaderboardController : MonoBehaviour
         string name = nameInputField.text;
         InsertScoreOnLeaderboard(score, name);
         SaveLeaderboard();
-        Debug.Log("Leaderboard Saved");
     }
 
     public void SetScore(int newScore)
@@ -77,7 +74,6 @@ public class LeaderboardController : MonoBehaviour
     private void SaveLeaderboard()
     {
         string toWrite = JsonUtility.ToJson(leaderboardEntries);
-        Debug.Log(toWrite);
         File.WriteAllText("Data/leaderboard.json", toWrite);
     }
 
@@ -85,13 +81,6 @@ public class LeaderboardController : MonoBehaviour
     {
         string leaderboard = File.ReadAllText("Data/leaderboard.json");
         leaderboardEntries = JsonUtility.FromJson<MyList>(leaderboard);
-    }
-
-    private void PrintLeaderboard()
-    {
-        for (int i = 0; i < leaderboardEntries.names.Count; i++) {
-            Debug.Log(leaderboardEntries.names[i] + " " + leaderboardEntries.scores[i].ToString());
-        }
     }
 
     public void ShowLeaderboardEntries()

@@ -340,12 +340,14 @@ public class PlayerMovement1 : MonoBehaviour
         } else if(collider.gameObject.name == "coffee(Clone)"){
             sounds[1].Play();
             pm.SetPowerUp(0,true);
+            coffeeSecs = 0;
             coffeeOn = true;
             Destroy(collider.gameObject);
             ingameUI.SetCoffeePowerup(true);
         } else if(collider.gameObject.name == "notes(Clone)"){
             sounds[2].Play();
             pm.SetPowerUp(1,true);
+            notesSecs = 0;
             notesOn = true;
             Destroy(collider.gameObject);
             ingameUI.SetNotesPowerup(true);
@@ -500,8 +502,6 @@ public class PlayerMovement1 : MonoBehaviour
             return;
         }
         numberOfVelocityIncreases++;
-
-        Debug.Log("Update Velocities");
 
         scoreController.incrementVelocityIncrease();
 

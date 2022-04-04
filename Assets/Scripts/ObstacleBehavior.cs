@@ -29,7 +29,7 @@ public class ObstacleBehavior : MonoBehaviour
         }
     }
 
-    void setType(int t){
+    public void setType(int t){
         type = t;
     }
 
