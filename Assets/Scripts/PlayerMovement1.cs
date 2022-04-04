@@ -214,9 +214,9 @@ public class PlayerMovement1 : MonoBehaviour
                 pressed = KeyState.Off;
             }
 
-            if (Input.GetKeyDown(KeyCode.P)){
+            if (Input.GetKeyDown(KeyCode.Z)){
                 pm.Shoot(this.gameObject.transform.position[0], this.gameObject.transform.position[1]);
-            } else if (Input.GetKeyDown(KeyCode.Escape)){
+            } else if (Input.GetKeyDown(KeyCode.P) && !paused){
                 uIManager.Pause();
             }
 
@@ -560,6 +560,7 @@ public class PlayerMovement1 : MonoBehaviour
     }
 
     public void Resume(){
+        Time.timeScale = 1;
         paused = false;
         canMove = true;
         controller.spawnActive = true;
@@ -583,7 +584,6 @@ public class PlayerMovement1 : MonoBehaviour
         }
         teacherSpawner.resumeSpawner();
         powerUpHolder.ResumeSpawner();
-        Time.timeScale = 1;
     }
 
 }
