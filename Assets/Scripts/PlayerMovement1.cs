@@ -69,6 +69,9 @@ public class PlayerMovement1 : MonoBehaviour
     private LeaderboardController leaderboard;
 
     [SerializeField]
+    private InputManager inputManager;
+
+    [SerializeField]
     private Text gameOverScore;
 
     [SerializeField]
@@ -214,15 +217,15 @@ public class PlayerMovement1 : MonoBehaviour
                 chosenSong = 1-chosenSong;
                 sounds[8+chosenSong].Play();
             }
-            if (Input.GetKey(KeyCode.Space)){
+            if (Input.GetKey(inputManager.GetKey("JetpackUp")) /*Input.GetKey(KeyCode.Space)*/){
                 pressed = KeyState.Space;
             } else {
                 pressed = KeyState.Off;
             }
 
-            if (Input.GetKeyDown(KeyCode.Z)){
+            if (Input.GetKeyDown(/*KeyCode.Z*/inputManager.GetKey("Fire"))){
                 pm.Shoot(this.gameObject.transform.position[0], this.gameObject.transform.position[1]);
-            } else if (Input.GetKeyDown(KeyCode.P) && !paused){
+            } else if (Input.GetKeyDown(/*KeyCode.P*/inputManager.GetKey("Pause")) && !paused){
                 uIManager.Pause();
             }
 
