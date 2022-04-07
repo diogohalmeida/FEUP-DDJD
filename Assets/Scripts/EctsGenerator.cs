@@ -30,19 +30,18 @@ public class EctsGenerator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        isActive = false;
+        SetIsActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
-
-        if (coinSequence.transform.childCount == 0 && isActive){
+        //Debug.Log("IsActive: " + isActive.ToString());
+        if (isActive && coinSequence.transform.childCount == 0){
+            SetIsActive(false);
             controller.NextSection();
-            isActive = false;
         }
     }
-
     public void multiplySpeed(float multiplyFactor)
     {
         speed *= multiplyFactor;
@@ -59,7 +58,15 @@ public class EctsGenerator : MonoBehaviour
         } else if (type == 2){
             GenerateEctsMap(coinsOnBottomMap);
         }
+
+        SetIsActive(true);
         
+    }
+
+    void SetIsActive(bool value)
+    {
+        //Debug.Log("Is active changed to: " + value.ToString());
+        isActive = value;
     }
 
     Texture2D SelectMap()
@@ -69,7 +76,6 @@ public class EctsGenerator : MonoBehaviour
 
     void GenerateEctsMap(Texture2D map)
     {
-        isActive = true;
         for (int i = 0; i < map.width; i++){
             for (int j = 0; j < map.height; j++){
                 GenerateEcts(i, j, map);

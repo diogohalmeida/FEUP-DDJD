@@ -5,12 +5,12 @@ using UnityEngine;
 public class MapController : MonoBehaviour
 {
 
-    int mapSection;
+    //int mapSection;
 
     public EctsGenerator ectsGenerator;
     public ObstacleSpawner obstacleSpawner;
 
-    bool sectionActive;
+    //bool sectionActive;
 
     public bool spawnActive;
 
@@ -18,26 +18,28 @@ public class MapController : MonoBehaviour
     void Start()
     {
         spawnActive = true;
-        sectionActive = false;
-        mapSection = Random.Range(0, 5);
+        //sectionActive = false;
+        //mapSection = Random.Range(0, 5);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!sectionActive && spawnActive){
+        //Debug.Log("Spawn:" + spawnActive.ToString());
+        //Debug.Log("Section:" + sectionActive.ToString());
+        /*if (!sectionActive && spawnActive){
             sectionActive = true;
             GenerateSection();
-        }
+        }*/
     }
 
-    void GenerateSection(){
+    public void GenerateSection(int mapSection){
         switch (mapSection){
             case 1:
                 ectsGenerator.SpawnEcts(0);
                 break;
             case 0:
-            case 5:
+            case 4:
                 obstacleSpawner.SpawnObstacle(0);
                 break;
             case 2:
@@ -54,7 +56,10 @@ public class MapController : MonoBehaviour
     }
 
     public void NextSection(){
-        sectionActive = false;
-        mapSection = Random.Range(0, 6);
+        Debug.Log("Spawn active: " + spawnActive.ToString());
+        if (!spawnActive) return;
+        //sectionActive = false;
+        int mapSection = Random.Range(0, 5);
+        GenerateSection(mapSection);
     }
 }

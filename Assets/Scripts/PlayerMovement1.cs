@@ -195,6 +195,7 @@ public class PlayerMovement1 : MonoBehaviour
         resumePowerups();
         resumeFlyingCoffees();
         resumeScore();
+        controller.GenerateSection(Random.Range(0, 5));
         gameRunning = true;
         flyingCoffeeSpawner.ResumeSpawner();
         teacherSpawner.resumeSpawner();

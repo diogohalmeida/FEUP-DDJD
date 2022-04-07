@@ -17,10 +17,28 @@ public class ObstacleSpawner : MonoBehaviour
     public void SpawnObstacle(int type)
     {
         int x;
-        int y;
+        float y;
         if (type == 0){
             x = 4;
-            y = Random.Range(-3, 3);
+            x = 4;
+            int location = Random.Range(0, 3);
+
+            switch (location)
+            {
+                case 0:
+                    // Obstacle on the top
+                    y = 3;
+                    break;
+                case 1:
+                    // Obstacle on the bottom
+                    y = -3;
+                    break;
+                case 2:
+                default:
+                    // Obstacle on the middle
+                    y = Random.Range(-0.5f, 0.5f);
+                    break;
+            }
         } else if (type == 1) {
             x = 15;
             y = -3;
@@ -29,7 +47,24 @@ public class ObstacleSpawner : MonoBehaviour
             y = 3;
         } else {
             x = 4;
-            y = Random.Range(-3, 3);
+            int location = Random.Range(0, 3);
+
+            switch (location)
+            {
+                case 0:
+                    // Obstacle on the top
+                    y = 3;
+                    break;
+                case 1:
+                    // Obstacle on the bottom
+                    y = -3;
+                    break;
+                case 2:
+                default:
+                    // Obstacle on the middle
+                    y = Random.Range(-0.5f, 0.5f);
+                    break;
+            }
         }
         GameObject obstacle = Instantiate(obstaclePrefab, new Vector3(x, y, 0), Quaternion.identity);
         obstacle.transform.Find("bar_left").localScale = new Vector2(1, 60);
