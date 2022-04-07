@@ -1993,8 +1993,16 @@ MonoBehaviour:
   controller: {fileID: 589071438}
   coinSequence: {fileID: 1853175031}
   maps:
-  - {fileID: 2800000, guid: 62fd15996b368ea4ab4f317a55353668, type: 3}
+  - {fileID: 2800000, guid: bbc446ac339d4594983a808d9fd396ee, type: 3}
   - {fileID: 2800000, guid: 2a2ad8fc0ba703b409dd5a7bb80f7892, type: 3}
+  - {fileID: 2800000, guid: 434ebb1b0534ef643822b0ceec78da17, type: 3}
+  - {fileID: 2800000, guid: b817ead0ce0ec264a89d59610d7792c7, type: 3}
+  - {fileID: 2800000, guid: 1ebafce10db2cd0459fb5f43b997bcdc, type: 3}
+  - {fileID: 2800000, guid: 275872138cdace7478946edd6fdc852f, type: 3}
+  - {fileID: 2800000, guid: 0a409f6ac9f553147aa82fda9fa79330, type: 3}
+  - {fileID: 2800000, guid: 9c7488fac6e7b8e4e8935da48cdb4fa8, type: 3}
+  - {fileID: 2800000, guid: 271cf4402eabb2247961c2afe88a9ce8, type: 3}
+  - {fileID: 2800000, guid: 05a60a02178561349871e21d32866025, type: 3}
   coinsOnTopMap: {fileID: 2800000, guid: 55d40ece563a0c04bb7bebcc828d322e, type: 3}
   coinsOnBottomMap: {fileID: 2800000, guid: 7543476aec2052d4fb7e1215ff755f18, type: 3}
 --- !u!4 &309098716
