@@ -30,7 +30,14 @@ public class MainMenuController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        if(PlayerPrefs.HasKey("player")){
+            int fem = PlayerPrefs.GetInt("player");
+            //Debug.Log(fem);
+            female = false;
+            if(fem == 1){
+                SwitchSprite();
+            }
+        }
     }
 
     public void StartGame()
@@ -50,11 +57,16 @@ public class MainMenuController : MonoBehaviour
 
     public void SwitchSprite()
     {
-
         female = !female;
         player.SetSprite(female);
-        int x = -860;
-        if(female) x = -680;
+        int fem = 0;
+        int x;
+        if(female){
+            fem = 1;
+            x = -680;
+        } 
+        else x = -860;
+        PlayerPrefs.SetInt("player", fem);
         Vector3 position = new Vector3(x, -130, 0);
         arrow.GetComponent<RectTransform>().anchoredPosition = position;
     }

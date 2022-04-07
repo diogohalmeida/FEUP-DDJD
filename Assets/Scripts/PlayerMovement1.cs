@@ -172,7 +172,7 @@ public class PlayerMovement1 : MonoBehaviour
     {
         female = isFemale;
         if(female){
-            spriteRenderer.sprite = main_char_f;
+            //spriteRenderer.sprite = main_char_f;
             deadSprite = deadSprite_f;
             GetComponent<Animator>().runtimeAnimatorController = animator_f;
         }

@@ -46,7 +46,6 @@ public class FlyingCoffeeSpawner : MonoBehaviour
         warning = GameObject.Instantiate(warningPrefab, spawnPoint, new Quaternion(0,0,0,0));
         warning.GetComponent<WarningController>().setSpeed(speed);
         warning.transform.parent = this.transform;
-
     }
 
     public void StopSpawner()

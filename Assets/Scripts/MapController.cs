@@ -56,7 +56,7 @@ public class MapController : MonoBehaviour
     }
 
     public void NextSection(){
-        Debug.Log("Spawn active: " + spawnActive.ToString());
+        //Debug.Log("Spawn active: " + spawnActive.ToString());
         if (!spawnActive) return;
         //sectionActive = false;
         int mapSection = Random.Range(0, 5);
