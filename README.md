@@ -1,2 +1,2 @@
 # FEUP-DDJD
-Projects for Digital Game Design and Development
+Projects for the Digital Game Design and Development course
